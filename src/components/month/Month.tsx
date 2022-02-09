@@ -12,13 +12,13 @@ const Month = () => {
   return (
     <Layout>
       <Card style={{ margin: 2 }} disabled>
-        <Text status={'danger'}>
+        <Text>
           Status: Green
         </Text>
-        <Text status={'danger'}>
+        <Text>
           This Month Budget: 4884.02
         </Text>
-        <Text status={'danger'}>
+        <Text>
           This Month Spending: 1000.00
         </Text>
       </Card>

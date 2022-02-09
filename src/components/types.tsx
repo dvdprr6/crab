@@ -4,17 +4,20 @@ import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-naviga
 export const MAIN_SCREEN = 'MainScreen'
 export const DASHBOARD_SCREEN = 'DashboardScreen'
 export const MONTH_SCREEN = 'MonthScreen'
+export const HISTORY_SCREEN = 'HistoryScreen'
 
 type TMainScreen = typeof MAIN_SCREEN
 type TDashboardScreen = typeof DASHBOARD_SCREEN
 type TMonthScreen = typeof MONTH_SCREEN
+type THistoryScreen = typeof HISTORY_SCREEN
 
-type TScreen = TMainScreen | TDashboardScreen | TMonthScreen
+type TScreen = TMainScreen | TDashboardScreen | TMonthScreen | THistoryScreen
 
 export type TRootStackParamList = {
   MainScreen: undefined
   DashboardScreen: undefined
   MonthScreen: undefined
+  HistoryScreen: undefined
 }
 
 export type TScreenRouteProps = RouteProp<TRootStackParamList, TScreen>

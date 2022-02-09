@@ -12,7 +12,7 @@ const chartConfig = {
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false // optional
-};
+}
 
 const data = [
   {
@@ -29,21 +29,21 @@ const data = [
     legendFontColor: "#7F7F7F",
     legendFontSize: 15
   }
-  ];
+]
 
 const Dashboard = () => {
   return (
     <Layout>
       <Card style={{ margin: 2 }} disabled>
-        <Text status={'danger'}>
+        <Text>
           Status: Green
         </Text>
       </Card>
       <Card style={{ margin: 2 }} disabled>
-        <Text status={'danger'}>
+        <Text>
           Total Spending: $1000
         </Text>
-        <Text status={'danger'}>
+        <Text>
           Total Savings: $1000
         </Text>
       </Card>
@@ -60,8 +60,8 @@ const Dashboard = () => {
         />
       </Card>
       <Card style={{ margin: 2 }} disabled>
-        <Text status={'danger'}>Highest Item</Text>
-        <Text status={'danger'}>Jordans at $225</Text>
+        <Text>Highest Item</Text>
+        <Text>Jordans at $225</Text>
       </Card>
     </Layout>
   )

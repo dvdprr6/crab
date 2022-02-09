@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { TRootStackParamList, MAIN_SCREEN, DASHBOARD_SCREEN, MONTH_SCREEN } from './types'
+import { TRootStackParamList, MAIN_SCREEN, DASHBOARD_SCREEN, MONTH_SCREEN, HISTORY_SCREEN } from './types'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { DashboardScreen } from './dashboard'
 import { MonthScreen } from './month'
+import { HistoryScreen } from './history'
 import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
@@ -21,7 +22,7 @@ const BottomTabBar: FC<{ navigation: any, state: any}> = (props) => {
     >
       <BottomNavigationTab icon={props => <Icon {...props}  name={'home-outline'} />} />
       <BottomNavigationTab icon={props => <Icon {...props} name={'layers-outline'} />} />
-      {/*<BottomNavigationTab icon={props => <Icon {...props} name={'message-circle-outline'} /> } />*/}
+      <BottomNavigationTab icon={props => <Icon {...props} name={'clock-outline'} /> } />
     </BottomNavigation>
   )
 }
@@ -31,7 +32,7 @@ const Tabs = () => {
     <Navigator screenOptions={{ headerShown: false }} tabBar={props => <BottomTabBar {...props} />}>
       <Screen name={DASHBOARD_SCREEN} component={DashboardScreen} />
       <Screen name={MONTH_SCREEN} component={MonthScreen} />
-      {/*<Screen name={CHAT_SCREEN} component={ChatScreen} />*/}
+      <Screen name={HISTORY_SCREEN} component={HistoryScreen} />
     </Navigator>
   )
 }
