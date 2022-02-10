@@ -3,8 +3,8 @@ module.exports = {
   plugins: [
     ['module-resolver', {
     'alias': {
-      '@crap-components': './src/components',
-      '@crap-common-components': './src/components/commons'
+      '@crab-components': './src/components',
+      '@crab-common-components': './src/components/commons'
     }
     }]
   ]

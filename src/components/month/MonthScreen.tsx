@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout } from '@ui-kitten/components'
 import Month from './Month'
-import { AppBar } from '@crap-common-components'
+import { AppBar } from '@crab-common-components'
 
 const MonthScreen = () => {
   return (

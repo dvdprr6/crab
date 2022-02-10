@@ -1,8 +1,8 @@
 import React from 'react'
-import { ApplicationProvider, IconRegistry, State } from "@ui-kitten/components";
+import { ApplicationProvider, IconRegistry, State } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import * as eva from '@eva-design/eva'
-import { Stack } from '@crap-components'
+import { Stack } from '@crab-components'
 
 const theme1 = {
   "color-primary-100": "#FEF0E3",
