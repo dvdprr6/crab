@@ -4,7 +4,8 @@ module.exports = {
     ['module-resolver', {
     'alias': {
       '@crab-components': './src/components',
-      '@crab-common-components': './src/components/commons'
+      '@crab-common-components': './src/components/commons',
+      '@crab-models': './src/models'
     }
     }]
   ]
