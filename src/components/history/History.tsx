@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Text, List, Card, Layout } from '@ui-kitten/components'
 import { StyleSheet, Dimensions } from 'react-native'
 import { PieChart } from 'react-native-chart-kit'
+import { TScreenProps, DETAILS_SCREEN } from '../types'
 
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
@@ -48,7 +49,9 @@ const data = new Array(8).fill({
   title: 'Item'
 })
 
-const History = () => {
+const History: FC<TScreenProps> = (props) => {
+  const { navigation } = props
+
   return (
     <Layout>
       <List
@@ -57,6 +60,7 @@ const History = () => {
         data={data}
         renderItem={props => (
           <Card
+            onPress={() => navigation.navigate(DETAILS_SCREEN)}
             style={styles.item}
             header={headerProps => (
               <Layout {...headerProps}>
@@ -65,20 +69,14 @@ const History = () => {
                 </Text>
               </Layout>
             )}>
-            {/*<Text>*/}
-            {/*  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's*/}
-            {/*  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make*/}
-            {/*  a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,*/}
-            {/*  remaining essentially unchanged.*/}
-            {/*</Text>*/}
             <PieChart
               data={chartData}
-              width={Dimensions.get("window").width}
+              width={Dimensions.get('window').width}
               height={100}
               chartConfig={chartConfig}
-              accessor={"population"}
-              backgroundColor={"transparent"}
-              paddingLeft={"15"}
+              accessor={'population'}
+              backgroundColor={'transparent'}
+              paddingLeft={'15'}
               center={[10, 10]}
             />
           </Card>

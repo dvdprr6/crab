@@ -1,20 +1,20 @@
 import React from 'react'
 import { Layout } from '@ui-kitten/components'
-import History from './History'
-import { AppBar } from '@crab-common-components'
+import Details from './Details'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { TScreenNavigationProps, TScreenRouteProps } from '../types'
+import { SubBar } from '@crab-common-components'
 
-const HistoryScreen = () => {
+const DetailsScreen = () => {
   const navigation = useNavigation<TScreenNavigationProps>()
   const route = useRoute<TScreenRouteProps>()
 
   return (
     <Layout style={{ flex: 1 }}>
-      <AppBar />
-      <History navigation={navigation} route={route} />
+      <SubBar navigation={navigation} route={route} />
+      <Details />
     </Layout>
   )
 }
 
-export default HistoryScreen
+export default DetailsScreen
