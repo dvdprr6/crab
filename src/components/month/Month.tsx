@@ -53,6 +53,8 @@ const Month = () => {
           <Text>Status</Text>
           <Text>Green</Text>
         </Layout>
+      </Card>
+      <Card style={styles.card} disabled>
         <Layout style={styles.main}>
           <Text>This Month Budget</Text>
           <Text>4884.02</Text>
@@ -76,7 +78,7 @@ const Month = () => {
         )}
       >
         <List
-          style={{ maxHeight: Dimensions.get('window').height - 300}}
+          style={{ maxHeight: Dimensions.get('window').height - 350}}
           data={data}
           renderItem={({ item, index }) => (
             <ListItem

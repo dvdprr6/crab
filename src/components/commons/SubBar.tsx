@@ -10,7 +10,7 @@ const SubBar: FC<TScreenProps> = (props) => {
       accessoryLeft={() => (
         <TopNavigationAction
           onPress={() => navigation.goBack()}
-          icon={props => <Icon {...props} name={'arrow-back'} />}
+          icon={props => <Icon {...props}  name={'arrow-back'} />}
         />
       )}
     />
