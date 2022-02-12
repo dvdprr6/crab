@@ -1,19 +1,22 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useCallback } from 'react'
 import {
   Text,
-  Layout,
   TopNavigation,
   Icon,
   TopNavigationAction,
   OverflowMenu,
-  Menu,
   MenuItem,
 } from '@ui-kitten/components'
-import { TScreenProps } from '../types'
+import { TScreenProps, SETTINGS_SCREEN } from '../types'
 
 const AppBar: FC<TScreenProps> = (props) => {
   const { navigation } = props
   const [visible, setVisible] = useState<boolean>(false)
+
+  const navigateToSettingsScreen = useCallback(() => {
+    navigation.navigate(SETTINGS_SCREEN)
+    setVisible(false)
+  }, [visible])
 
   return (
       <TopNavigation
@@ -27,7 +30,7 @@ const AppBar: FC<TScreenProps> = (props) => {
               />
             )}
             visible={visible}
-            onSelect={() => setVisible(false)}
+            onSelect={() => navigateToSettingsScreen()}
             onBackdropPress={() => setVisible(false)}
           >
             <MenuItem title={'Settings'} />

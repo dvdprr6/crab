@@ -6,14 +6,16 @@ export const DASHBOARD_SCREEN = 'DashboardScreen'
 export const MONTH_SCREEN = 'MonthScreen'
 export const HISTORY_SCREEN = 'HistoryScreen'
 export const DETAILS_SCREEN = 'DetailsScreen'
+export const SETTINGS_SCREEN = 'SettingsScreen'
 
 type TMainScreen = typeof MAIN_SCREEN
 type TDashboardScreen = typeof DASHBOARD_SCREEN
 type TMonthScreen = typeof MONTH_SCREEN
 type THistoryScreen = typeof HISTORY_SCREEN
 type TDetailsScreen = typeof DETAILS_SCREEN
+type TSettingScreen = typeof SETTINGS_SCREEN
 
-type TScreen = TMainScreen | TDashboardScreen | TMonthScreen | THistoryScreen | TDetailsScreen
+type TScreen = TMainScreen | TDashboardScreen | TMonthScreen | THistoryScreen | TDetailsScreen | TSettingScreen
 
 export type TRootStackParamList = {
   MainScreen: undefined
@@ -21,6 +23,7 @@ export type TRootStackParamList = {
   MonthScreen: undefined
   HistoryScreen: undefined
   DetailsScreen: undefined
+  SettingsScreen: undefined
 }
 
 export type TScreenRouteProps = RouteProp<TRootStackParamList, TScreen>

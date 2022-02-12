@@ -6,8 +6,9 @@ const TextFieldControl: FC<{
   onChange: (text: string) => void
   placeholder: string
   disabled?: boolean
+  label?: string
 }> = (props) => {
-  const { value, onChange, placeholder, disabled } = props
+  const { value, onChange, placeholder, disabled, label } = props
 
   return (
     <Input
@@ -15,6 +16,7 @@ const TextFieldControl: FC<{
       onChangeText={(text: string) => onChange(text)}
       placeholder={placeholder}
       disabled={disabled}
+      label={label}
     />
   )
 }

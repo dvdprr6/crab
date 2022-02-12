@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Layout, Card, List, ListItem, Button, Icon } from "@ui-kitten/components";
+import { Text, Layout, Card, List, ListItem } from '@ui-kitten/components'
 import { PieChart } from 'react-native-chart-kit'
 import { StyleSheet, Dimensions } from 'react-native'
 

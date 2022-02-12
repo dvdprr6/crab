@@ -4,3 +4,8 @@ export type TMonthForm = {
   itemCost: number
   reoccurring: boolean
 }
+
+export type TBudgeForm = {
+  id?: number
+  budget: number
+}

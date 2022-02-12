@@ -7,6 +7,11 @@ import { useForm, Controller } from 'react-hook-form'
 import { ViewProps, StyleSheet, GestureResponderEvent } from 'react-native'
 import { TextFieldControl, CheckBoxControl } from '@crab-common-components'
 
+const schema = yup.object().shape({
+  itemName: yup.string().required('Is Required'),
+  itemCost: yup.string().required('Is Required')
+})
+
 const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
@@ -57,7 +62,7 @@ const MonthForm: FC<{
   initialValues?: TMonthForm
 }> = (props) => {
   const { title, open, onSubmit, onClose, initialValues } = props
-  const { control, handleSubmit, reset, setValue } = useForm<TMonthForm>()
+  const { control, handleSubmit, reset, setValue } = useForm<TMonthForm>({ resolver: yupResolver(schema) })
 
   useEffect(() => {
     setValue('id', initialValues?.id)
@@ -86,6 +91,7 @@ const MonthForm: FC<{
                   value={value}
                   onChange={onChange}
                   placeholder={'Item Expense Name'}
+                  label={errors.itemName?.message}
                 />
               )}
             />
@@ -99,6 +105,7 @@ const MonthForm: FC<{
                   value={value}
                   onChange={onChange}
                   placeholder={'Item Expense Cost ($)'}
+                  label={errors.itemCost?.message}
                 />
               )}
             />
