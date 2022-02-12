@@ -1,0 +1,18 @@
+{
+  "components": {
+    "TopNavigationAction": {
+      "appearances": {
+        "default": {
+          "mapping": {
+            "iconTintColor": "color-primary-default",
+            "state": {
+              "active": {
+                "iconTintColor": "color-primary-default"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
