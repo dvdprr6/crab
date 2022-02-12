@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: 'realm-android'
 
 import com.android.build.OutputFile
 
@@ -188,6 +189,10 @@ android {
     }
 }
 
+realm {
+    syncEnabled = false
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
@@ -215,6 +220,15 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    /** DEVELOPMENT DEPENDENCIES */
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+    /** TESTING DEPENDENCIES */
+    implementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 }
 
 // Run this once to be able to run the application with BUCK
