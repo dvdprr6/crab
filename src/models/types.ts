@@ -6,8 +6,9 @@ export type TSettingsDto = {
 export type TMonthForm = {
   id?: number
   itemName: string
-  itemCost: number
-  recurring: boolean
+  amount: number
+  reocurring: boolean
+  itemType: 'EXPENSE' | 'REVENUE'
 }
 
 export type TBudgeForm = {

@@ -1,15 +1,20 @@
 import React, { FC, useEffect } from 'react'
-import { Layout, Text, Modal, Button, Card } from '@ui-kitten/components'
+import { Layout, Text, Modal, Button, Card, Radio } from '@ui-kitten/components'
 import { TMonthForm } from '@crab-models'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
-import { ViewProps, StyleSheet, GestureResponderEvent } from 'react-native'
-import { TextFieldControl, CheckBoxControl } from '@crab-common-components'
+import { ViewProps, StyleSheet, GestureResponderEvent, Dimensions } from 'react-native'
+import { TextFieldControl, CheckBoxControl, RadioGroupControl } from '@crab-common-components'
+import { ITEM_TYPES } from '@crab-utils'
 
 const schema = yup.object().shape({
   itemName: yup.string().required('Is Required'),
-  itemCost: yup.string().required('Is Required')
+  amount: yup.number().test(
+    'maxDigitsAfterDecimal',
+    'Number field must have 2 digits after decimal or less',
+    (number) => /^\d+(\.\d{1,2})?$/.test(String(number))
+  )
 })
 
 const styles = StyleSheet.create({
@@ -19,6 +24,9 @@ const styles = StyleSheet.create({
   },
   form: {
     margin: 3
+  },
+  container: {
+    width: Dimensions.get('window').width - 20
   }
 })
 
@@ -76,7 +84,7 @@ const MonthForm: FC<{
 
   return(
     <Layout level={'1'}>
-      <Modal visible={open}>
+      <Modal visible={open} style={styles.container}>
         <Card
           header={(props) => <Header viewProps={props} title={title} />}
           footer={(props) => <Footer handleOnSubmit={handleSubmit(onSubmit)} onClose={onClose} viewProps={props} />}
@@ -98,28 +106,47 @@ const MonthForm: FC<{
           </Layout>
           <Layout style={styles.form}>
             <Controller
-              name={'itemCost'}
+              name={'amount'}
               control={control}
               render={({ field: { value, onChange }, formState: { errors }}) => (
                 <TextFieldControl
                   value={value}
                   onChange={onChange}
-                  placeholder={'Item Expense Cost ($)'}
-                  label={errors.itemCost?.message}
+                  placeholder={'Amount ($)'}
+                  keyboardType={'numeric'}
+                  label={errors.amount?.message}
                 />
               )}
             />
           </Layout>
           <Layout style={styles.form}>
             <Controller
-              name={'recurring'}
+              name={'reocurring'}
               control={control}
               render={({ field: { value, onChange }}) => (
                 <CheckBoxControl
                   value={value}
-                  title={'Recurring'}
+                  title={'Reocurring'}
                   onChange={onChange}
                 />
+              )}
+            />
+          </Layout>
+          <Layout style={styles.form}>
+            <Controller
+              name={'itemType'}
+              control={control}
+              render={({ field: { value, onChange }}) => (
+                <RadioGroupControl
+                  value={value}
+                  title={'Item Types'}
+                  options={ITEM_TYPES}
+                  onChange={onChange}
+                >
+                  {ITEM_TYPES.map((item, index) => (
+                    <Radio key={index}>{item}</Radio>
+                  ))}
+                </RadioGroupControl>
               )}
             />
           </Layout>

@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
-import { Input } from '@ui-kitten/components'
+import { Input, Text } from '@ui-kitten/components'
+import { KeyboardTypeOptions } from 'react-native'
 
 const TextFieldControl: FC<{
   value: any
@@ -7,8 +8,9 @@ const TextFieldControl: FC<{
   placeholder: string
   disabled?: boolean
   label?: string
+  keyboardType?: KeyboardTypeOptions
 }> = (props) => {
-  const { value, onChange, placeholder, disabled, label } = props
+  const { value, onChange, placeholder, disabled, label, keyboardType } = props
 
   return (
     <Input
@@ -16,7 +18,8 @@ const TextFieldControl: FC<{
       onChangeText={(text: string) => onChange(text)}
       placeholder={placeholder}
       disabled={disabled}
-      label={label}
+      label={() => (<Text status={'primary'}>{label}</Text>)}
+      keyboardType={keyboardType}
     />
   )
 }
