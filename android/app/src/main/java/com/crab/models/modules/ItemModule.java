@@ -22,7 +22,7 @@ public class ItemModule extends ReactContextBaseJavaModule {
     @NonNull
     @Override
     public String getName() {
-        return "ItemModule";
+        return "Item";
     }
 
     @ReactMethod

@@ -7,7 +7,8 @@ module.exports = {
       '@crab-common-components': './src/components/commons',
       '@crab-models': './src/models',
       '@crab-reducers': './src/reducers',
-      '@crab-utils': './src/utils'
+      '@crab-utils': './src/utils',
+      '@crab-modules': './src/modules'
     }
   }]
   ]

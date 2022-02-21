@@ -121,12 +121,12 @@ const MonthForm: FC<{
           </Layout>
           <Layout style={styles.form}>
             <Controller
-              name={'reocurring'}
+              name={'recurring'}
               control={control}
               render={({ field: { value, onChange }}) => (
                 <CheckBoxControl
                   value={value}
-                  title={'Reocurring'}
+                  title={'Recurring'}
                   onChange={onChange}
                 />
               )}

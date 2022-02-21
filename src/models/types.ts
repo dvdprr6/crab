@@ -1,15 +1,24 @@
-export type TSettingsDto = {
+export type TItemDto = {
   id?: string
-  budget: number
-}
-
-export type TMonthForm = {
-  id?: number
   itemName: string
   amount: number
-  reocurring: boolean
-  itemType: 'EXPENSE' | 'REVENUE'
+  recurring: boolean
+  itemType: string
+  createTime?: string
+  modifiedTime?: string
 }
+
+// export type TMonthDto = {
+//   month: string
+//   status: 'GREEN' | 'YELLOW' | 'RED'
+//   monthRevenue: number
+//   monthExpense: number
+//   items: TItemDto[]
+// }
+
+/** FORM TYPES */
+
+export type TMonthForm = TItemDto
 
 export type TBudgeForm = {
   id?: number

@@ -4,7 +4,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import * as eva from '@eva-design/eva'
 import { Stack } from '@crab-components'
 import { Provider } from 'react-redux'
-//import { store } from '@crab-reducers'
+import { store } from '@crab-reducers'
 
 const theme1 = {
   "color-primary-100": "#FEF0E3",
@@ -178,14 +178,12 @@ const theme2 = {
 const App = () => {
 
   return (
-    // <Provider store={store}>
-    <>
+    <Provider store={store}>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme2}}>
         <Stack />
       </ApplicationProvider>
-    </>
-    // </Provider>
+    </Provider>
   )
 }
 
