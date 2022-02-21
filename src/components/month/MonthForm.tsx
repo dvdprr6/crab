@@ -74,6 +74,8 @@ const MonthForm: FC<{
 
   useEffect(() => {
     setValue('id', initialValues?.id)
+    setValue('createDate', initialValues?.createDate)
+    setValue('modifiedDate', initialValues?.modifiedDate)
   }, [initialValues])
 
   useEffect(() => {

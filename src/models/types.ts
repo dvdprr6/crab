@@ -4,17 +4,9 @@ export type TItemDto = {
   amount: number
   recurring: boolean
   itemType: string
-  createTime?: string
-  modifiedTime?: string
+  createDate?: string
+  modifiedDate?: string
 }
-
-// export type TMonthDto = {
-//   month: string
-//   status: 'GREEN' | 'YELLOW' | 'RED'
-//   monthRevenue: number
-//   monthExpense: number
-//   items: TItemDto[]
-// }
 
 /** FORM TYPES */
 
