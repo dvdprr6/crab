@@ -3,6 +3,18 @@ import { RadioGroup, Text } from '@ui-kitten/components'
 import { ChildrenWithProps } from '@ui-kitten/components/devsupport'
 import { RadioProps } from '@ui-kitten/components/ui/radio/radio.component'
 
+function useRadioGroupControl(radioGroup: { value: any, options: string[] }): { index: number }{
+  const { value, options } = radioGroup
+  let index = options.findIndex(item => item === value)
+
+  if(index === -1) {
+    index = 0
+  }
+
+  return { index }
+
+}
+
 const RadioGroupControl: FC<{
   value: any
   title: string
@@ -11,9 +23,10 @@ const RadioGroupControl: FC<{
   children: ChildrenWithProps<RadioProps>
 }> = (props) => {
   const { value, title, options, onChange, children } = props
+  const { index } = useRadioGroupControl({ value, options })
 
-  const onRadioChange = useCallback(opt => {
-    const selectedOption = options.find(item => item === opt) || ''
+  const onRadioChange = useCallback(index => {
+    const selectedOption = options[index]
     onChange(selectedOption)
   }, [value])
 
@@ -21,7 +34,7 @@ const RadioGroupControl: FC<{
     <React.Fragment>
       <Text>{title}</Text>
       <RadioGroup
-        selectedIndex={options.findIndex(item => item === value)}
+        selectedIndex={index}
         onChange={index => onRadioChange(index)}
       >
         {children}
