@@ -11,8 +11,8 @@ const DashboardScreen = () => {
 
   return (
     <Layout style={{ flex: 1 }}>
-      <AppBar navigation={navigation} route={route} />
-      <Dashboard />
+      <AppBar />
+      <Dashboard navigation={navigation} route={route} />
     </Layout>
   )
 }

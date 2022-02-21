@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { FC, useEffect } from 'react'
 import { Layout, Text, Card } from '@ui-kitten/components'
 import { PieChart } from 'react-native-chart-kit'
 import { StyleSheet, Dimensions } from 'react-native'
+import { TScreenProps, DETAILS_SCREEN } from '../types'
 
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
@@ -49,7 +50,15 @@ const styles = StyleSheet.create({
   }
 })
 
-const Dashboard = () => {
+const Dashboard: FC<TScreenProps> = (props) => {
+  const { navigation } = props
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', e => {
+      e.preventDefault() // prevent leaving the screen
+    })
+  }, [navigation])
+
   return (
     <Layout>
       <Card style={styles.card} disabled>

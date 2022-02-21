@@ -6,7 +6,7 @@ import {
 
 const AppBar = () => {
   return (
-      <TopNavigation title={() => <Text status={'info'}>Crab</Text>} />
+    <TopNavigation title={() => <Text status={'info'}>Crab</Text>} />
   )
 }
 

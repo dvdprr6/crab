@@ -11,7 +11,7 @@ const HistoryScreen = () => {
 
   return (
     <Layout style={{ flex: 1 }}>
-      <AppBar navigation={navigation} route={route}/>
+      <AppBar/>
       <History navigation={navigation} route={route} />
     </Layout>
   )
