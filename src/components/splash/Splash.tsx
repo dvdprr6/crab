@@ -27,6 +27,7 @@ const Splash: FC<TScreenProps> = (props) => {
   return(
     <Layout style={styles.container}>
       <Layout style={styles.spinner}>
+        <Text category={'h1'} status={'primary'}>{'Crab'}</Text>
         <Spinner size={'giant'} />
       </Layout>
     </Layout>

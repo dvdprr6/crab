@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react'
 import { Layout, Text, Card } from '@ui-kitten/components'
 import { PieChart } from 'react-native-chart-kit'
 import { StyleSheet, Dimensions } from 'react-native'
-import { TScreenProps, DETAILS_SCREEN } from '../types'
+import { TScreenProps } from '../types'
 
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
