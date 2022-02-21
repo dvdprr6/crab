@@ -33,7 +33,7 @@ export type TPropsFromRedux = ConnectedProps<typeof connector>
 
 /** MIDDLEWARE */
 
-export function splashPageLoadThunk(): TThunkResult<Promise<TActions>>{
+export function splashThunk(): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {

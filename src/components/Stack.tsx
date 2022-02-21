@@ -2,14 +2,14 @@ import React, { FC } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   TRootStackParamList,
-  MAIN_SCREEN, DASHBOARD_SCREEN, MONTH_SCREEN, HISTORY_SCREEN, DETAILS_SCREEN, SETTINGS_SCREEN
+  SPLASH_SCREEN, MAIN_SCREEN, DASHBOARD_SCREEN, MONTH_SCREEN, HISTORY_SCREEN, DETAILS_SCREEN
 } from './types'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { DashboardScreen } from './dashboard'
 import { MonthScreen } from './month'
 import { HistoryScreen } from './history'
 import { DetailsScreen } from './details'
-import { SettingsScreen } from './settings'
+import { SplashScreen } from './splash'
 import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
@@ -46,9 +46,9 @@ const Stack = () => {
   return (
     <NavigationContainer>
       <RootSack.Navigator screenOptions={{ headerShown: false }}>
+        <RootSack.Screen name={SPLASH_SCREEN} component={SplashScreen} />
         <RootSack.Screen name={MAIN_SCREEN} component={Tabs} options={{ headerShown: false }} />
         <RootSack.Screen name={DETAILS_SCREEN} component={DetailsScreen} />
-        <RootSack.Screen name={SETTINGS_SCREEN} component={SettingsScreen} />
       </RootSack.Navigator>
     </NavigationContainer>
   )
