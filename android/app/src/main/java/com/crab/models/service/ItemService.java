@@ -1,11 +1,13 @@
 package com.crab.models.service;
 
+import com.crab.common.mapper.ItemDtoToItemEntityMapper;
 import com.crab.common.mapper.ItemEntityToItemDtoMapper;
 import com.crab.models.dto.ItemDto;
 import com.crab.models.entities.ItemEntity;
 import com.crab.models.repository.ItemRepository;
 import com.crab.utils.DateUtils;
 import com.crab.utils.ModelConverter;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 
 import org.mapstruct.factory.Mappers;
@@ -36,5 +38,15 @@ public class ItemService {
         WritableArray writableArray = ModelConverter.convertModelToWritableArray(itemDtoList);
 
         return writableArray;
+    }
+
+    public void upsertItem(ReadableMap readableMap){
+        ItemDto itemDto = ModelConverter.convertReadableMapToModel(readableMap, ItemDto.class);
+
+        ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
+
+        ItemEntity itemEntity = itemDtoToItemEntityMapper.itemDtoToItemEntity(itemDto);
+
+        itemRepository.upsert(itemEntity);
     }
 }

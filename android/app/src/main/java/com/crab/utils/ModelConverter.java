@@ -1,10 +1,14 @@
 package com.crab.utils;
 
+import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
@@ -51,6 +55,24 @@ public class ModelConverter {
         }
 
         return writableArray;
+    }
+
+    public static <DTO> DTO convertReadableMapToModel(ReadableMap readableMap, Class<DTO> dtoClazz) {
+        ObjectMapper mapper = new ObjectMapper();
+        DTO dto = null;
+
+        try{
+            JSONObject json = toJsonObject(readableMap);
+            dto = mapper.readValue(json.toString(), dtoClazz);
+        }catch(JSONException e){
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return dto;
     }
 
     private static WritableMap toWritableMap(JSONObject jsonObject) throws JSONException {
@@ -104,5 +126,60 @@ public class ModelConverter {
         }
 
         return writableArray;
+    }
+
+    private static JSONObject toJsonObject(ReadableMap readableMap) throws JSONException{
+        JSONObject json = new JSONObject();
+        ReadableMapKeySetIterator iterator = readableMap.keySetIterator();
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+            switch (readableMap.getType(key)) {
+                case Null:
+                    json.put(key, JSONObject.NULL);
+                    break;
+                case Boolean:
+                    json.put(key, readableMap.getBoolean(key));
+                    break;
+                case Number:
+                    json.put(key, readableMap.getDouble(key));
+                    break;
+                case String:
+                    json.put(key, readableMap.getString(key));
+                    break;
+                case Map:
+                    json.put(key, toJsonObject(readableMap.getMap(key)));
+                    break;
+                case Array:
+                    json.put(key, toJsonArray(readableMap.getArray(key)));
+                    break;
+            }
+        }
+        return json;
+    }
+
+    private static JSONArray toJsonArray(ReadableArray readableArray) throws JSONException {
+        JSONArray array = new JSONArray();
+        for (int i = 0; i < readableArray.size(); i++) {
+            switch (readableArray.getType(i)) {
+                case Null:
+                    break;
+                case Boolean:
+                    array.put(readableArray.getBoolean(i));
+                    break;
+                case Number:
+                    array.put(readableArray.getDouble(i));
+                    break;
+                case String:
+                    array.put(readableArray.getString(i));
+                    break;
+                case Map:
+                    array.put(toJsonObject(readableArray.getMap(i)));
+                    break;
+                case Array:
+                    array.put(toJsonArray(readableArray.getArray(i)));
+                    break;
+            }
+        }
+        return array;
     }
 }

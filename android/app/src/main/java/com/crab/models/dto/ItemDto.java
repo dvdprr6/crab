@@ -5,7 +5,7 @@ public class ItemDto {
     private String itemName;
     private Float amount;
     private Boolean recurring;
-    private Boolean itemType;
+    private String itemType;
     private String createDate;
     private String modifiedDate;
 
@@ -43,11 +43,11 @@ public class ItemDto {
         this.recurring = recurring;
     }
 
-    public Boolean getItemType() {
+    public String getItemType() {
         return itemType;
     }
 
-    public void setItemType(Boolean itemType) {
+    public void setItemType(String itemType) {
         this.itemType = itemType;
     }
 

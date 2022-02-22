@@ -8,6 +8,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 
 public class ItemModule extends ReactContextBaseJavaModule {
@@ -29,5 +30,11 @@ public class ItemModule extends ReactContextBaseJavaModule {
     public void getMonthToDateItems(Promise promise){
         WritableArray writableArray = itemService.monthToDateItems();
         promise.resolve(writableArray);
+    }
+
+    @ReactMethod
+    public void upsertItem(ReadableMap readableMap, Promise promise){
+        itemService.upsertItem(readableMap);
+        promise.resolve("");
     }
 }
