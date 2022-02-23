@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "node_modules/.bin/react-native run-android --port 8082",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "node_modules/.bin/react-native start --port 8082",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
@@ -19,6 +19,8 @@
     "@react-navigation/native-stack": "^6.4.1",
     "@ui-kitten/components": "^5.1.1",
     "@ui-kitten/eva-icons": "^5.1.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "react": "17.0.2",
     "react-hook-form": "^7.26.1",
     "react-native": "0.67.2",
