@@ -1,5 +1,6 @@
 import { RouteProp } from '@react-navigation/native'
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack'
+import { TItemDto } from '@crab-models'
 
 export const SPLASH_SCREEN = 'SplashScreen'
 export const MAIN_SCREEN = 'MainScreen'
@@ -23,7 +24,7 @@ export type TRootStackParamList = {
   DashboardScreen: undefined
   MonthScreen: undefined
   HistoryScreen: undefined
-  DetailsScreen: undefined
+  DetailsScreen: { status: string, revenue: number, expenses: number, savings: number, chartData: Array<any>, items: TItemDto[] }
 }
 
 export type TScreenRouteProps = RouteProp<TRootStackParamList, TScreen>

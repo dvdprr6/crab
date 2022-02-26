@@ -1,7 +1,9 @@
-import React from 'react'
-import { Text, Layout, Card, List, ListItem } from '@ui-kitten/components'
+import React, { FC } from 'react'
+import { Text, Layout, Card, List, ListItem, Icon } from '@ui-kitten/components'
 import { PieChart } from 'react-native-chart-kit'
 import { StyleSheet, Dimensions } from 'react-native'
+import { TScreenProps } from '../types'
+import { EXPENSE } from '@crab-utils'
 
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
@@ -13,24 +15,6 @@ const chartConfig = {
   barPercentage: 0.5,
   useShadowColorFromDataset: false // optional
 }
-
-const data = [
-  {
-    name: 'Seoul',
-    population: 21500000,
-    color: '#d84e4b',
-    legendFontColor: '#7F7F7F',
-    legendFontSize: 15
-  },
-  {
-    name: 'Toronto',
-    population: 2800000,
-    color: '#ffbc2c',
-    legendFontColor: '#7F7F7F',
-    legendFontSize: 15
-  }
-]
-
 const styles = StyleSheet.create({
   card: {
     margin: 2
@@ -49,35 +33,36 @@ const styles = StyleSheet.create({
   }
 })
 
-const dataYee = new Array(100).fill({
-  title: 'Title for Item',
-  main: 'Description for Item'
-})
+const Details: FC<TScreenProps> = (props) => {
+  const { route } = props
 
-const Details = () => {
   return (
     <Layout>
       <Card style={styles.card} disabled>
         <Layout style={styles.status}>
           <Text>Status</Text>
-          <Text>Green</Text>
+          <Text>{route.params?.status}</Text>
         </Layout>
       </Card>
       <Card style={styles.card} disabled>
         <Layout style={styles.total}>
-          <Text>Total Spending</Text>
-          <Text>$1000</Text>
+          <Text>Total Month Revenue</Text>
+          <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(route.params?.revenue || 0)}</Text>
         </Layout>
         <Layout style={styles.total}>
-          <Text>Total Savings</Text>
-          <Text>$1000</Text>
+          <Text>Total Month Expenses</Text>
+          <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(route.params?.expenses || 0)}</Text>
+        </Layout>
+        <Layout style={styles.total}>
+          <Text>Total Month Savings</Text>
+          <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(route.params?.savings || 0)}</Text>
         </Layout>
       </Card>
       <Card style={styles.card} disabled>
         <PieChart
-          data={data}
+          data={route.params?.chartData || []}
           width={Dimensions.get('window').width}
-          height={200}
+          height={100}
           chartConfig={chartConfig}
           accessor={'population'}
           backgroundColor={'transparent'}
@@ -88,11 +73,14 @@ const Details = () => {
       <Card style={styles.card} disabled>
         <List
           style={{ maxHeight: Dimensions.get('window').height - 450}}
-          data={dataYee}
+          data={route.params?.items || []}
           renderItem={({ item, index }) => (
             <ListItem
-              title={`${item.title} ${index + 1}`}
-              description={`${item.description} ${index + 1}`}
+              title={new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.amount)}
+              description={item.itemName}
+              accessoryLeft={(props) => (
+                item.itemType === EXPENSE ? <Icon {...props} name={'arrow-circle-down'} /> : <Icon {...props} name={'arrow-circle-up'} />
+              )}
             />
           )}
         />

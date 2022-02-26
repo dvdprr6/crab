@@ -11,8 +11,3 @@ export type TItemDto = {
 /** FORM TYPES */
 
 export type TMonthForm = TItemDto
-
-export type TBudgeForm = {
-  id?: number
-  budget: number
-}

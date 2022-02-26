@@ -12,7 +12,7 @@ const DetailsScreen = () => {
   return (
     <Layout style={{ flex: 1 }}>
       <SubBar navigation={navigation} route={route} />
-      <Details />
+      <Details navigation={navigation} route={route} />
     </Layout>
   )
 }

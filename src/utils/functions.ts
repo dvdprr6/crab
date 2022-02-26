@@ -5,9 +5,9 @@ export function calculateLeverageStatus(revenue: number, expenses: number): stri
   const debtRatio = _.divide(expenses, revenue)
   let status = ''
 
-  if(debtRatio <= 0.5){
+  if(debtRatio <= 0.7){
     status = GREEN_STATUS
-  }else if(debtRatio > 0.6 && debtRatio <= 0.9){
+  }else if(debtRatio > 0.7 && debtRatio <= 0.9){
     status = YELLOW_STATUS
   }else{
     status = RED_STATUS

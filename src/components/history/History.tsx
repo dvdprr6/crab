@@ -3,6 +3,8 @@ import { Text, List, Card, Layout } from '@ui-kitten/components'
 import { StyleSheet, Dimensions } from 'react-native'
 import { PieChart } from 'react-native-chart-kit'
 import { TScreenProps, DETAILS_SCREEN } from '../types'
+import { TPropsFromRedux, connector } from '@crab-reducers'
+import { useHistory } from './hooks'
 
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
@@ -28,49 +30,40 @@ const styles = StyleSheet.create({
   }
 })
 
-const chartData = [
-  {
-    name: "Seoul",
-    population: 21500000,
-    color: "#d84e4b",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 10
-  },
-  {
-    name: "Toronto",
-    population: 2800000,
-    color: "#ffbc2c",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 10
-  }
-]
-
 const data = new Array(8).fill({
   title: 'Item'
 })
 
-const History: FC<TScreenProps> = (props) => {
-  const { navigation } = props
+const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
+  const { yearToDateItems: { value: itemDto }, navigation } = props
+  const historyInfo = useHistory(itemDto)
 
   return (
     <Layout>
       <List
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
-        data={data}
+        data={historyInfo}
         renderItem={props => (
           <Card
-            onPress={() => navigation.navigate(DETAILS_SCREEN)}
+            onPress={() => navigation.navigate(DETAILS_SCREEN, {
+              status: props.item.status,
+              revenue: props.item.revenue,
+              expenses: props.item.expenses,
+              savings: props.item.savings,
+              chartData: props.item.chartData,
+              items: props.item.items
+            })}
             style={styles.item}
             header={headerProps => (
               <Layout {...headerProps}>
                 <Text category='h6'>
-                  {props.item.title} {props.index + 1}
+                  {props.item.month}
                 </Text>
               </Layout>
             )}>
             <PieChart
-              data={chartData}
+              data={props.item.chartData}
               width={Dimensions.get('window').width}
               height={100}
               chartConfig={chartConfig}
@@ -86,4 +79,4 @@ const History: FC<TScreenProps> = (props) => {
   )
 }
 
-export default History
+export default connector(History)
