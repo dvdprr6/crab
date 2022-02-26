@@ -1,14 +1,12 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, FC, useEffect } from 'react'
 import { Text, Layout, Card, Button, List, ListItem, Icon } from '@ui-kitten/components'
 import { StyleSheet, Dimensions } from 'react-native'
 import MonthForm from './MonthForm'
 import { DeleteDialog } from '@crab-common-components'
-import { TMonthForm } from '@crab-models'
-
-const data = new Array(100).fill({
-  title: 'Title for Item',
-  main: 'Description for Item'
-})
+import { TItemDto, TMonthForm } from '@crab-models'
+import { TPropsFromRedux, connector, TAppDispatch, upsertMonthToDateThunk } from '@crab-reducers'
+import { useMonth } from './hooks'
+import { useDispatch } from 'react-redux'
 
 const styles = StyleSheet.create({
   card: {
@@ -24,44 +22,64 @@ const styles = StyleSheet.create({
   }
 })
 
-const Month = () => {
-  const [openForm, setOpenForm] = useState<boolean>(false)
-  const [openEditForm, setOpenEditForm] = useState<boolean>(false)
-  const [openDialog, setOpenDialog] = useState<boolean>(false)
-  const [form, setForm] = useState<TMonthForm>({} as TMonthForm)
+const Month: FC<TPropsFromRedux> = (props) => {
+  const { items: { value: itemDto } } = props
+  const { status, month, revenue, expenses, savings, items } = useMonth(itemDto)
+  const [openNew, setOpenNew] = useState<boolean>(false)
+  const [openEdit, setOpenEdit] = useState<boolean>(false)
+  const [openDelete, setOpenDelete] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [selectedItem, setSelectedItem] = useState<TItemDto>({} as TItemDto)
+  const dispatch: TAppDispatch = useDispatch()
 
-  const onCloseForm = useCallback(() => {
-    setOpenForm(false)
-  }, [openForm])
+  useEffect(() => {
+    if(!loading){
+      setOpenNew(false)
+      setOpenEdit(false)
+      setOpenDelete(false)
+    }
+  }, [loading])
 
-  const onClosEditForm = useCallback(() => {
-    setOpenEditForm(false)
-  }, [openEditForm])
+  const onOpenNew = useCallback(() => setOpenNew(true), [openNew])
+  const onCloseNew = useCallback(() => setOpenNew(false), [openNew])
 
-  const onCloseDialog = useCallback(() => {
-    setOpenDialog(false)
-  }, [openDialog])
+  const onOpenEdit = useCallback((item: TItemDto) => {
+    setSelectedItem(item)
+    setOpenEdit(true)
+  }, [openEdit])
 
-  const onDelete = useCallback(() => {
-    // TODO: implement
-  }, [form])
+  const onCloseEdit = useCallback(() => setOpenEdit(false), [openEdit])
+
+  const onSubmit = (form: TItemDto) => {
+    setLoading(true)
+    dispatch(upsertMonthToDateThunk(form)).then(() => setLoading(false))
+  }
+
+  const onEdit = (form: TItemDto) => {
+    setLoading(true)
+    dispatch(upsertMonthToDateThunk(form)).then(() => setLoading(false))
+  }
 
   return (
     <Layout>
       <Card style={styles.card} disabled>
         <Layout style={styles.main}>
           <Text>Status</Text>
-          <Text>Green</Text>
+          <Text>{status}</Text>
         </Layout>
       </Card>
       <Card style={styles.card} disabled>
         <Layout style={styles.main}>
-          <Text>This Month Budget</Text>
-          <Text>4884.02</Text>
+          <Text>Total Month Revenue</Text>
+          <Text>{revenue}</Text>
         </Layout>
         <Layout style={styles.main}>
-          <Text>This Month Spending</Text>
-          <Text>1000.00</Text>
+          <Text>Total Month Expenses</Text>
+          <Text>{expenses}</Text>
+        </Layout>
+        <Layout style={styles.main}>
+          <Text>Total Month Savings</Text>
+          <Text>{savings}</Text>
         </Layout>
       </Card>
       <Card
@@ -70,7 +88,7 @@ const Month = () => {
         header={() => (
           <Layout style={styles.button}>
             <Button
-              onPress={() => setOpenForm(true)}
+              onPress={() => onOpenNew()}
               appearance={'ghost'}
               accessoryLeft={(props) => <Icon {...props} name={'plus-outline'} />}
             />
@@ -79,20 +97,20 @@ const Month = () => {
       >
         <List
           style={{ maxHeight: Dimensions.get('window').height - 350}}
-          data={data}
+          data={items}
           renderItem={({ item, index }) => (
             <ListItem
-              onPress={() => setOpenEditForm(true)}
-              title={`${item.title} ${index + 1}`}
-              description={`${item.description} ${index + 1}`}
-              accessoryRight={() => (
-                <Button
-                  onPress={() => setOpenDialog(true)}
-                  size={'small'}
-                  appearance={'ghost'}
-                  accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}
-                />
-              )}
+              onPress={() => onOpenEdit(item)}
+              title={`${item.itemName}`}
+              description={`${item.itemType}`}
+              // accessoryRight={() => (
+              //   <Button
+              //     onPress={() => setOpenDialog(true)}
+              //     size={'small'}
+              //     appearance={'ghost'}
+              //     accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}
+              //   />
+              // )}
             />
           )}
         />
@@ -100,28 +118,28 @@ const Month = () => {
       <Layout>
         <MonthForm
           title={'New Expense Item'}
-          onSubmit={setForm}
-          open={openForm}
-          onClose={onCloseForm}
+          onSubmit={onSubmit}
+          open={openNew}
+          onClose={() => onCloseNew()}
         />
       </Layout>
       <Layout>
         <MonthForm
           title={'Update Expense Item'}
-          onSubmit={setForm}
-          open={openEditForm}
-          onClose={onClosEditForm}
+          onSubmit={onEdit}
+          open={openEdit}
+          onClose={() => onCloseEdit()}
         />
       </Layout>
       <Layout>
-        <DeleteDialog
-          open={openDialog}
-          onDelete={onDelete}
-          onClose={onCloseDialog}
-        />
+        {/*<DeleteDialog*/}
+        {/*  open={openDialog}*/}
+        {/*  onDelete={onDelete}*/}
+        {/*  onClose={onCloseDialog}*/}
+        {/*/>*/}
       </Layout>
     </Layout>
   )
 }
 
-export default Month
+export default connector(Month)

@@ -3,10 +3,12 @@ import { connect, ConnectedProps } from 'react-redux'
 import thunk, { ThunkAction, ThunkMiddleware } from 'redux-thunk'
 import {
   getMonthToDateItems,
+  upsertItemAndGetMonthToDateItems,
   monthToDateAllReducer,
   TMonthToDateAction,
   TMonthToDateAllState
 } from './mtd'
+import { TItemDto } from '@crab-models'
 
 const THUNK_TIMEOUT = 1500
 
@@ -46,14 +48,27 @@ export function splashThunk(): TThunkResult<Promise<TActions>>{
   }
 }
 
-export function yearToMonthThunk(): TThunkResult<Promise<TActions>>{
+export function monthToDateThunk(): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
-        const yearToMonthAction = getMonthToDateItems()
+        const monthToDateAction = getMonthToDateItems()
           .then(success => dispatch(success))
 
-        resolve(yearToMonthAction)
+        resolve(monthToDateAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function upsertMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const monthToDateAction = upsertItemAndGetMonthToDateItems(itemDto)
+          .then(success => dispatch(success))
+
+        resolve(monthToDateAction)
       }, THUNK_TIMEOUT)
     })
   }

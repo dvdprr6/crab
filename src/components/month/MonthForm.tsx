@@ -124,6 +124,7 @@ const MonthForm: FC<{
           <Layout style={styles.form}>
             <Controller
               name={'recurring'}
+              defaultValue={false}
               control={control}
               render={({ field: { value, onChange }}) => (
                 <CheckBoxControl
@@ -137,6 +138,7 @@ const MonthForm: FC<{
           <Layout style={styles.form}>
             <Controller
               name={'itemType'}
+              defaultValue={ITEM_TYPES[0]}
               control={control}
               render={({ field: { value, onChange }}) => (
                 <RadioGroupControl

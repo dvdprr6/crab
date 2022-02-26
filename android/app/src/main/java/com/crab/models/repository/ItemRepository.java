@@ -21,12 +21,25 @@ public class ItemRepository {
         List<ItemEntity> itemEntityList = new ArrayList<>();
 
         try{
-            itemEntityList = realm
+            List<ItemEntity> itemEntityRealm = realm
                     .where(ItemEntity.class)
                     .between("create_date", fromDate, toDate)
                     .findAll()
                     .stream()
                     .collect(Collectors.toList());
+
+            for(ItemEntity item : itemEntityRealm){
+                ItemEntity itemEntity = new ItemEntity();
+                itemEntity.setId(item.getId());
+                itemEntity.setItemName(item.getItemName());
+                itemEntity.setAmount(item.getAmount());
+                itemEntity.setRecurring(item.getRecurring());
+                itemEntity.setItemType(item.getItemType());
+                itemEntity.setCreateDate(item.getCreateDate());
+                itemEntity.setModifiedDate(item.getModifiedDate());
+                itemEntityList.add(itemEntity);
+            }
+
         }catch(Exception e){
             Log.e("REALMDB", e.getMessage());
         }finally {
