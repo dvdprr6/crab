@@ -50,7 +50,7 @@ const Dashboard: FC<TScreenProps & TPropsFromRedux> = (props) => {
   }, [navigation])
 
   return(
-    <Layout style={{ maxHeight: 2000 }}>
+    <Layout>
       <List
         style={styles.container}
         contentContainerStyle={styles.contentContainer}

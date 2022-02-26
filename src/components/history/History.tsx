@@ -30,10 +30,6 @@ const styles = StyleSheet.create({
   }
 })
 
-const data = new Array(8).fill({
-  title: 'Item'
-})
-
 const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
   const { yearToDateItems: { value: itemDto }, navigation } = props
   const historyInfo = useHistory(itemDto)
