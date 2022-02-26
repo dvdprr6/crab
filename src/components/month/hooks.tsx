@@ -14,7 +14,7 @@ type TMonthInfo = {
 
 export function useMonth(itemDto: TItemDto[]): TMonthInfo {
 
-  const monthInfo = {
+  let monthInfo: TMonthInfo = {
     status: GREEN_STATUS,
     month: moment().format('MMMM'),
     revenue: 0.00,
@@ -24,7 +24,7 @@ export function useMonth(itemDto: TItemDto[]): TMonthInfo {
   }
 
   if(!_.isEmpty(itemDto)){
-    return calculateMonthInfo(itemDto)
+    monthInfo = calculateMonthInfo(itemDto)
   }
 
   return monthInfo

@@ -7,6 +7,7 @@ import { TItemDto, TMonthForm } from '@crab-models'
 import { TPropsFromRedux, connector, TAppDispatch, upsertMonthToDateThunk } from '@crab-reducers'
 import { useMonth } from './hooks'
 import { useDispatch } from 'react-redux'
+import { EXPENSE } from '@crab-utils'
 
 const styles = StyleSheet.create({
   card: {
@@ -71,15 +72,15 @@ const Month: FC<TPropsFromRedux> = (props) => {
       <Card style={styles.card} disabled>
         <Layout style={styles.main}>
           <Text>Total Month Revenue</Text>
-          <Text>{revenue}</Text>
+          <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(revenue)}</Text>
         </Layout>
         <Layout style={styles.main}>
           <Text>Total Month Expenses</Text>
-          <Text>{expenses}</Text>
+          <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(expenses)}</Text>
         </Layout>
         <Layout style={styles.main}>
           <Text>Total Month Savings</Text>
-          <Text>{savings}</Text>
+          <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(savings)}</Text>
         </Layout>
       </Card>
       <Card
@@ -101,8 +102,11 @@ const Month: FC<TPropsFromRedux> = (props) => {
           renderItem={({ item, index }) => (
             <ListItem
               onPress={() => onOpenEdit(item)}
-              title={`${item.itemName}`}
-              description={`${item.itemType}`}
+              title={new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.amount)}
+              description={item.itemName}
+              accessoryLeft={(props) => (
+                item.itemType === EXPENSE ? <Icon {...props} name={'arrow-circle-down'} /> : <Icon {...props} name={'arrow-circle-up'} />
+              )}
               // accessoryRight={() => (
               //   <Button
               //     onPress={() => setOpenDialog(true)}
@@ -120,6 +124,7 @@ const Month: FC<TPropsFromRedux> = (props) => {
           title={'New Expense Item'}
           onSubmit={onSubmit}
           open={openNew}
+          loading={loading}
           onClose={() => onCloseNew()}
         />
       </Layout>
@@ -128,7 +133,9 @@ const Month: FC<TPropsFromRedux> = (props) => {
           title={'Update Expense Item'}
           onSubmit={onEdit}
           open={openEdit}
+          loading={loading}
           onClose={() => onCloseEdit()}
+          initialValues={selectedItem}
         />
       </Layout>
       <Layout>

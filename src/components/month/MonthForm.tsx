@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import { Layout, Text, Modal, Button, Card, Radio } from '@ui-kitten/components'
+import { Layout, Text, Modal, Button, Card, Radio, Spinner } from '@ui-kitten/components'
 import { TMonthForm } from '@crab-models'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import * as yup from 'yup'
@@ -46,18 +46,17 @@ const Header: FC<{
 const Footer: FC<{
   handleOnSubmit: (event: GestureResponderEvent) => void
   onClose: () => void
+  loading: boolean
   viewProps?: ViewProps
 }> = (props) => {
-  const { handleOnSubmit, onClose, viewProps } = props
+  const { handleOnSubmit, onClose, loading, viewProps } = props
 
   return(
     <Layout {...viewProps} style={styles.button}>
       <Button appearance={'ghost'} onPress={() => onClose()}>
         Cancel
       </Button>
-      <Button appearance={'ghost'} onPress={handleOnSubmit}>
-        Save
-      </Button>
+      <Button disabled={loading} appearance={'ghost'} accessoryLeft={() => loading ? <Spinner size={'tiny'} /> : <></>} onPress={handleOnSubmit}>Save</Button>
     </Layout>
   )
 }
@@ -67,9 +66,10 @@ const MonthForm: FC<{
   open: boolean
   onSubmit: (form: TMonthForm) => void
   onClose: () => void
+  loading: boolean
   initialValues?: TMonthForm
 }> = (props) => {
-  const { title, open, onSubmit, onClose, initialValues } = props
+  const { title, open, onSubmit, onClose, loading, initialValues } = props
   const { control, handleSubmit, reset, setValue } = useForm<TMonthForm>({ resolver: yupResolver(schema) })
 
   useEffect(() => {
@@ -89,12 +89,13 @@ const MonthForm: FC<{
       <Modal visible={open} style={styles.container}>
         <Card
           header={(props) => <Header viewProps={props} title={title} />}
-          footer={(props) => <Footer handleOnSubmit={handleSubmit(onSubmit)} onClose={onClose} viewProps={props} />}
+          footer={(props) => <Footer loading={loading} handleOnSubmit={handleSubmit(onSubmit)} onClose={onClose} viewProps={props} />}
           disabled
         >
           <Layout style={styles.form}>
             <Controller
               name={'itemName'}
+              defaultValue={initialValues?.itemName}
               control={control}
               render={({ field: { value, onChange }, formState: { errors }}) => (
                 <TextFieldControl
@@ -109,10 +110,11 @@ const MonthForm: FC<{
           <Layout style={styles.form}>
             <Controller
               name={'amount'}
+              defaultValue={initialValues?.amount}
               control={control}
               render={({ field: { value, onChange }, formState: { errors }}) => (
                 <TextFieldControl
-                  value={value}
+                  value={value?.toString()}
                   onChange={onChange}
                   placeholder={'Amount ($)'}
                   keyboardType={'numeric'}
@@ -124,7 +126,7 @@ const MonthForm: FC<{
           <Layout style={styles.form}>
             <Controller
               name={'recurring'}
-              defaultValue={false}
+              defaultValue={initialValues?.recurring || false}
               control={control}
               render={({ field: { value, onChange }}) => (
                 <CheckBoxControl
@@ -138,7 +140,7 @@ const MonthForm: FC<{
           <Layout style={styles.form}>
             <Controller
               name={'itemType'}
-              defaultValue={ITEM_TYPES[0]}
+              defaultValue={initialValues?.itemType || ITEM_TYPES[0]}
               control={control}
               render={({ field: { value, onChange }}) => (
                 <RadioGroupControl
