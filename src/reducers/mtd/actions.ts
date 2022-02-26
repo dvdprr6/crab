@@ -32,3 +32,19 @@ export function upsertItemAndGetMonthToDateItems(itemDto: TItemDto): Promise<TMo
     resolve(createAction(MONTH_TO_DATE_GET_SUCCESS, payload))
   })
 }
+
+export function deleteItemAndGetMonthToDateItems(itemDto: TItemDto): Promise<TMonthToDateAction>{
+  return new Promise<TMonthToDateAction>(async resolve => {
+    await Item.deleteItem(itemDto)
+
+    const items = await Item.getMonthToDateItems()
+
+    const payload = {
+      value: items,
+      isError: false,
+      error: ''
+    }
+
+    resolve(createAction(MONTH_TO_DATE_GET_SUCCESS, payload))
+  })
+}

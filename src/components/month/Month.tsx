@@ -3,8 +3,8 @@ import { Text, Layout, Card, Button, List, ListItem, Icon } from '@ui-kitten/com
 import { StyleSheet, Dimensions } from 'react-native'
 import MonthForm from './MonthForm'
 import { DeleteDialog } from '@crab-common-components'
-import { TItemDto, TMonthForm } from '@crab-models'
-import { TPropsFromRedux, connector, TAppDispatch, upsertMonthToDateThunk } from '@crab-reducers'
+import { TItemDto } from '@crab-models'
+import { TPropsFromRedux, connector, TAppDispatch, upsertMonthToDateThunk, deleteMonthToDateThunk } from '@crab-reducers'
 import { useMonth } from './hooks'
 import { useDispatch } from 'react-redux'
 import { EXPENSE } from '@crab-utils'
@@ -49,6 +49,13 @@ const Month: FC<TPropsFromRedux> = (props) => {
     setOpenEdit(true)
   }, [openEdit])
 
+  const onOpenDelete = useCallback((item: TItemDto) => {
+    setSelectedItem(item)
+    setOpenDelete(true)
+  }, [openDelete])
+
+  const onCloseDelete = useCallback(() => setOpenDelete(false), [openDelete])
+
   const onCloseEdit = useCallback(() => setOpenEdit(false), [openEdit])
 
   const onSubmit = (form: TItemDto) => {
@@ -59,6 +66,11 @@ const Month: FC<TPropsFromRedux> = (props) => {
   const onEdit = (form: TItemDto) => {
     setLoading(true)
     dispatch(upsertMonthToDateThunk(form)).then(() => setLoading(false))
+  }
+
+  const onDelete = () => {
+    setLoading(true)
+    dispatch(deleteMonthToDateThunk(selectedItem)).then(() => setLoading(false))
   }
 
   return (
@@ -107,14 +119,14 @@ const Month: FC<TPropsFromRedux> = (props) => {
               accessoryLeft={(props) => (
                 item.itemType === EXPENSE ? <Icon {...props} name={'arrow-circle-down'} /> : <Icon {...props} name={'arrow-circle-up'} />
               )}
-              // accessoryRight={() => (
-              //   <Button
-              //     onPress={() => setOpenDialog(true)}
-              //     size={'small'}
-              //     appearance={'ghost'}
-              //     accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}
-              //   />
-              // )}
+              accessoryRight={() => (
+                <Button
+                  onPress={() => onOpenDelete(item)}
+                  size={'small'}
+                  appearance={'ghost'}
+                  accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}
+                />
+              )}
             />
           )}
         />
@@ -139,11 +151,12 @@ const Month: FC<TPropsFromRedux> = (props) => {
         />
       </Layout>
       <Layout>
-        {/*<DeleteDialog*/}
-        {/*  open={openDialog}*/}
-        {/*  onDelete={onDelete}*/}
-        {/*  onClose={onCloseDialog}*/}
-        {/*/>*/}
+        <DeleteDialog
+          open={openDelete}
+          onDelete={() => onDelete()}
+          onClose={() => onCloseDelete()}
+          loading={loading}
+        />
       </Layout>
     </Layout>
   )

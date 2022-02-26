@@ -49,4 +49,14 @@ public class ItemService {
 
         itemRepository.upsert(itemEntity);
     }
+
+    public void deleteItem(ReadableMap readableMap){
+        ItemDto itemDto = ModelConverter.convertReadableMapToModel(readableMap, ItemDto.class);
+
+        ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
+
+        ItemEntity itemEntity = itemDtoToItemEntityMapper.itemDtoToItemEntity(itemDto);
+
+        itemRepository.delete(itemEntity);
+    }
 }

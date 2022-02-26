@@ -4,6 +4,7 @@ import thunk, { ThunkAction, ThunkMiddleware } from 'redux-thunk'
 import {
   getMonthToDateItems,
   upsertItemAndGetMonthToDateItems,
+  deleteItemAndGetMonthToDateItems,
   monthToDateAllReducer,
   TMonthToDateAction,
   TMonthToDateAllState
@@ -66,6 +67,19 @@ export function upsertMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
         const monthToDateAction = upsertItemAndGetMonthToDateItems(itemDto)
+          .then(success => dispatch(success))
+
+        resolve(monthToDateAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function deleteMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const monthToDateAction = deleteItemAndGetMonthToDateItems(itemDto)
           .then(success => dispatch(success))
 
         resolve(monthToDateAction)

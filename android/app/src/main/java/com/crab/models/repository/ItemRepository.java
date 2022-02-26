@@ -1,5 +1,6 @@
 package com.crab.models.repository;
 
+import android.content.ClipData;
 import android.util.Log;
 
 import com.crab.db.RealmDb;
@@ -55,6 +56,23 @@ public class ItemRepository {
 
         try{
             realm.executeTransaction(transaction -> transaction.insertOrUpdate(itemEntity));
+        }catch(Exception e){
+            Log.e("REALMDB", e.getMessage());
+        }finally {
+            realm.close();
+        }
+    }
+
+    public void delete(ItemEntity itemEntity){
+        RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
+        Realm realm = Realm.getInstance(realmConfiguration);
+
+        try{
+            realm.executeTransaction(transaction -> {
+                ItemEntity item = transaction.where(ItemEntity.class).equalTo("id", itemEntity.getId()).findFirst();
+                item.deleteFromRealm();
+                item = null;
+            });
         }catch(Exception e){
             Log.e("REALMDB", e.getMessage());
         }finally {

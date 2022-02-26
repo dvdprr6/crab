@@ -37,4 +37,10 @@ public class ItemModule extends ReactContextBaseJavaModule {
         itemService.upsertItem(readableMap);
         promise.resolve("");
     }
+
+    @ReactMethod
+    public void deleteItem(ReadableMap readableMap, Promise promise){
+        itemService.deleteItem(readableMap);
+        promise.resolve("");
+    }
 }
