@@ -1,10 +1,10 @@
 import React, { useState, useCallback, FC, useEffect } from 'react'
 import { Text, Layout, Card, Button, List, ListItem, Icon, Divider } from '@ui-kitten/components'
-import { StyleSheet, Dimensions, RefreshControl } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import MonthForm from './MonthForm'
 import { DeleteDialog } from '@crab-common-components'
 import { TItemDto } from '@crab-models'
-import { TPropsFromRedux, connector, TAppDispatch, monthToDateThunk, upsertMonthToDateThunk, deleteMonthToDateThunk } from '@crab-reducers'
+import { TPropsFromRedux, connector, TAppDispatch, upsertMonthToDateThunk, deleteMonthToDateThunk } from '@crab-reducers'
 import { useMonth } from './hooks'
 import { useDispatch } from 'react-redux'
 import { EXPENSE } from '@crab-utils'
@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
 const Month: FC<TPropsFromRedux> = (props) => {
   const { monthToDateItems: { value: itemDto } } = props
   const { status, month, revenue, expenses, savings, items } = useMonth(itemDto)
-  const [refresh, setRefresh] = useState<boolean>(false)
   const [openNew, setOpenNew] = useState<boolean>(false)
   const [openEdit, setOpenEdit] = useState<boolean>(false)
   const [openDelete, setOpenDelete] = useState<boolean>(false)
@@ -41,11 +40,6 @@ const Month: FC<TPropsFromRedux> = (props) => {
       setOpenDelete(false)
     }
   }, [loading])
-
-  const onRefresh = useCallback(() => {
-    setRefresh(true)
-    dispatch(monthToDateThunk()).then(() => setRefresh(false))
-  }, [refresh])
 
   const onOpenNew = useCallback(() => setOpenNew(true), [openNew])
   const onCloseNew = useCallback(() => setOpenNew(false), [openNew])
@@ -120,7 +114,6 @@ const Month: FC<TPropsFromRedux> = (props) => {
         <List
           style={{ maxHeight: Dimensions.get('window').height - 390}}
           data={items}
-          refreshControl={<RefreshControl refreshing={refresh} onRefresh={onRefresh} /> }
           ItemSeparatorComponent={Divider}
           renderItem={({ item, index }) => (
             <ListItem

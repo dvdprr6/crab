@@ -58,38 +58,13 @@ export function splashThunk(): TThunkResult<Promise<TActions>>{
   }
 }
 
-export function monthToDateThunk(): TThunkResult<Promise<TActions>>{
-  return async (dispatch) => {
-    return new Promise<TActions>(resolve => {
-      setTimeout(() => {
-        const monthToDateAction = getMonthToDateItems()
-          .then(success => dispatch(success))
-
-        resolve(monthToDateAction)
-      }, THUNK_TIMEOUT)
-    })
-  }
-}
-
-export function yearToDateThunk(): TThunkResult<Promise<TActions>>{
-  return async (dispatch) => {
-    return new Promise<TActions>(resolve => {
-      setTimeout(() => {
-        const yearToDateAction = getYearToDateItems()
-          .then(success => dispatch(success))
-
-        resolve(yearToDateAction)
-      }, THUNK_TIMEOUT)
-    })
-  }
-}
-
 export function upsertMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
         const monthToDateAction = upsertItemAndGetMonthToDateItems(itemDto)
           .then(success => dispatch(success))
+          .then(() => getYearToDateItems().then(success => dispatch(success)))
 
         resolve(monthToDateAction)
       }, THUNK_TIMEOUT)
@@ -103,6 +78,7 @@ export function deleteMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<
       setTimeout(() => {
         const monthToDateAction = deleteItemAndGetMonthToDateItems(itemDto)
           .then(success => dispatch(success))
+          .then(() => getYearToDateItems().then(success => dispatch(success)))
 
         resolve(monthToDateAction)
       }, THUNK_TIMEOUT)
