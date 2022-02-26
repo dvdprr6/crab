@@ -53,7 +53,7 @@ const Footer: FC<{
 
   return(
     <Layout {...viewProps} style={styles.button}>
-      <Button appearance={'ghost'} onPress={() => onClose()}>
+      <Button disabled={loading} appearance={'ghost'} onPress={() => onClose()}>
         Cancel
       </Button>
       <Button disabled={loading} appearance={'ghost'} accessoryLeft={() => loading ? <Spinner size={'tiny'} /> : <></>} onPress={handleOnSubmit}>Save</Button>
