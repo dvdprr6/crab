@@ -9,17 +9,24 @@ import {
   TMonthToDateAction,
   TMonthToDateAllState
 } from './mtd'
+import {
+  getYearToDateItems,
+  yearToDateAllReducer,
+  TYearToDateAction,
+  TYearToDateAllState
+} from './ytd'
 import { TItemDto } from '@crab-models'
 
 const THUNK_TIMEOUT = 1500
 
-type TActions = TMonthToDateAction
-type TStates = TMonthToDateAllState
+type TActions = TMonthToDateAction | TYearToDateAction
+type TStates = TMonthToDateAllState | TYearToDateAllState
 
 type TThunkResult<R> = ThunkAction<R, TStates, undefined, TActions>
 
 const rootReducers = combineReducers({
-  items: monthToDateAllReducer
+  monthToDateItems: monthToDateAllReducer,
+  yearToDateItems: yearToDateAllReducer
 })
 
 export const store = createStore(rootReducers, applyMiddleware(thunk as ThunkMiddleware<TStates, TActions>))
@@ -28,7 +35,8 @@ export type TAppDispatch = typeof store.dispatch
 
 const mapStateToProps = (state: TRootState) => ({
   /** ITEM STATE */
-  items: state.items.payload
+  monthToDateItems: state.monthToDateItems.payload,
+  yearToDateItems: state.yearToDateItems.payload
 })
 
 export const connector = connect(mapStateToProps)
@@ -42,6 +50,7 @@ export function splashThunk(): TThunkResult<Promise<TActions>>{
       setTimeout(() => {
         const splashAction = getMonthToDateItems()
           .then(success => dispatch(success))
+          .then(() => getYearToDateItems().then(success => dispatch(success)))
 
         resolve(splashAction)
       }, THUNK_TIMEOUT)
@@ -57,6 +66,19 @@ export function monthToDateThunk(): TThunkResult<Promise<TActions>>{
           .then(success => dispatch(success))
 
         resolve(monthToDateAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function yearToDateThunk(): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const yearToDateAction = getYearToDateItems()
+          .then(success => dispatch(success))
+
+        resolve(yearToDateAction)
       }, THUNK_TIMEOUT)
     })
   }

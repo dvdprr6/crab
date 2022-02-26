@@ -1,6 +1,5 @@
 package com.crab.models.repository;
 
-import android.content.ClipData;
 import android.util.Log;
 
 import com.crab.db.RealmDb;

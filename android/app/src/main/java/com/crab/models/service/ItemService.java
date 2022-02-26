@@ -40,6 +40,23 @@ public class ItemService {
         return writableArray;
     }
 
+    public WritableArray yearToDateItems(){
+        Date fromDate = DateUtils.beginningOfYear();
+        Date toDate = DateUtils.currentDate();
+
+        List<ItemEntity> itemEntityList = itemRepository.getItemsByDateRange(fromDate, toDate);
+
+        ItemEntityToItemDtoMapper itemEntityToItemDtoMapper = Mappers.getMapper(ItemEntityToItemDtoMapper.class);
+
+        List<ItemDto> itemDtoList = itemEntityList.stream()
+                .map(item -> itemEntityToItemDtoMapper.itemEntityToItemDto(item))
+                .collect(Collectors.toList());
+
+        WritableArray writableArray = ModelConverter.convertModelToWritableArray(itemDtoList);
+
+        return writableArray;
+    }
+
     public void upsertItem(ReadableMap readableMap){
         ItemDto itemDto = ModelConverter.convertReadableMapToModel(readableMap, ItemDto.class);
 

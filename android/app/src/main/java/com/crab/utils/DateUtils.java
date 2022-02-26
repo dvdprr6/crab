@@ -32,6 +32,20 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    public static Date beginningOfYear(){
+        Calendar calendar = Calendar.getInstance();
+
+        int beginningOfYear = calendar.getActualMinimum(Calendar.DAY_OF_YEAR);
+
+        calendar.set(Calendar.DAY_OF_YEAR, beginningOfYear);
+        calendar.set(Calendar.HOUR, -12); // -12 = 00:00:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+    }
+
     public static Date currentDate(){
         Calendar calendar = Calendar.getInstance();
 

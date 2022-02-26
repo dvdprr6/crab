@@ -44,6 +44,25 @@ public class DateUtilsTest {
     }
 
     @Test
+    public void getBeginningOfYearTest(){
+        Calendar calendar = Calendar.getInstance();
+
+        int beginningOfMonth = calendar.getActualMinimum(Calendar.DAY_OF_YEAR);
+
+        calendar.set(Calendar.DAY_OF_YEAR, beginningOfMonth);
+        calendar.set(Calendar.HOUR, -12);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        String expected = calendar.getTime().toString();
+
+        String actual = DateUtils.beginningOfYear().toString();
+
+        assert(actual.equals(expected));
+    }
+
+    @Test
     public void getCurrentDateTest(){
         String currentDate = DateUtils.currentDate().toString();
 
