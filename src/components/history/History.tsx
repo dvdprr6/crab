@@ -18,7 +18,7 @@ const chartConfig = {
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
+  listContainer: {
     paddingHorizontal: 8,
     paddingVertical: 4
   },
@@ -34,7 +34,7 @@ const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
   return (
     <Layout style={{ flex: 1 }}>
       <List
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={styles.listContainer}
         data={historyInfo}
         renderItem={props => (
           <Card

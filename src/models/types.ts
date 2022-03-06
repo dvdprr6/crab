@@ -1,3 +1,5 @@
+import { RenderProp } from "@ui-kitten/components/devsupport";
+
 export type TItemDto = {
   id?: string
   itemName: string
@@ -11,3 +13,19 @@ export type TItemDto = {
 /** FORM TYPES */
 
 export type TMonthForm = TItemDto
+
+/** SCREENS */
+
+export type TAppBar = {
+  accessoryRight?: RenderProp
+  accessoryLeft?: RenderProp
+}
+
+export type TUseMonth = {
+  status: string
+  month: string
+  revenue: number
+  expenses: number
+  savings: number
+  items: TItemDto[]
+}

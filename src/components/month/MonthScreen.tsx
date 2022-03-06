@@ -5,7 +5,7 @@ import { AppBar } from '@crab-common-components'
 
 const MonthScreen = () => {
   return (
-    <Layout style={{ flex: 1}}>
+    <Layout style={{ flex: 1 }}>
       <AppBar />
       <Month />
     </Layout>
