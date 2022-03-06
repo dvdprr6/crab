@@ -1,6 +1,6 @@
 import React, { useState, useCallback, FC, useEffect } from 'react'
 import { Text, Layout, Card, Button, List, ListItem, Icon, Divider } from '@ui-kitten/components'
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 import MonthForm from './MonthForm'
 import { DeleteDialog } from '@crab-common-components'
 import { TItemDto } from '@crab-models'
@@ -10,9 +10,6 @@ import { useDispatch } from 'react-redux'
 import { EXPENSE } from '@crab-utils'
 
 const styles = StyleSheet.create({
-  card: {
-    margin: 2
-  },
   button: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
@@ -74,14 +71,14 @@ const Month: FC<TPropsFromRedux> = (props) => {
   }
 
   return (
-    <Layout>
-      <Card style={styles.card} disabled>
+    <Layout style={{ flex: 1, margin: 2 }}>
+      <Card disabled>
         <Layout style={styles.main}>
           <Text>Status</Text>
           <Text>{status}</Text>
         </Layout>
       </Card>
-      <Card style={styles.card} disabled>
+      <Card disabled>
         <Layout style={styles.main}>
           <Text>{month}</Text>
         </Layout>
@@ -99,7 +96,7 @@ const Month: FC<TPropsFromRedux> = (props) => {
         </Layout>
       </Card>
       <Card
-        style={styles.card}
+        style={{ flex: 1 }}
         disabled
         header={() => (
           <Layout style={styles.button}>
@@ -112,7 +109,6 @@ const Month: FC<TPropsFromRedux> = (props) => {
         )}
       >
         <List
-          style={{ maxHeight: Dimensions.get('window').height - 390}}
           data={items}
           ItemSeparatorComponent={Divider}
           renderItem={({ item, index }) => (

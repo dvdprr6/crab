@@ -37,7 +37,7 @@ const Details: FC<TScreenProps> = (props) => {
   const { route } = props
 
   return (
-    <Layout>
+    <Layout style={{ flex: 1 }}>
       <Card style={styles.card} disabled>
         <Layout style={styles.status}>
           <Text>Status</Text>
@@ -70,9 +70,8 @@ const Details: FC<TScreenProps> = (props) => {
           center={[10, 10]}
         />
       </Card>
-      <Card style={styles.card} disabled>
+      <Card style={{ flex: 1 }} disabled>
         <List
-          style={{ maxHeight: Dimensions.get('window').height - 450}}
           data={route.params?.items || []}
           renderItem={({ item, index }) => (
             <ListItem
