@@ -1,18 +1,9 @@
-import { TItemDto } from '@crab-models'
+import { TItemDto, TUseDashboard } from '@crab-models'
 import { EXPENSE, REVENUE, GREEN_STATUS, calculateLeverageStatus } from '@crab-utils'
 import _ from 'lodash'
 
-type TDashboardInfo = {
-  status: string
-  revenue: number
-  expenses: number
-  savings: number
-  chartData: Array<any>
-  topThreeExpense: string[]
-}
-
-export function useDashboard(itemDto: TItemDto[]): TDashboardInfo{
-  let dashboardInfo: TDashboardInfo = {
+export function useDashboard(itemDto: TItemDto[]): TUseDashboard{
+  let dashboardInfo: TUseDashboard = {
     status: GREEN_STATUS,
     revenue: 0.00,
     expenses: 0.00,
@@ -28,7 +19,7 @@ export function useDashboard(itemDto: TItemDto[]): TDashboardInfo{
   return dashboardInfo
 }
 
-function calculateDashboardInfo(itemDto: TItemDto[]): TDashboardInfo{
+function calculateDashboardInfo(itemDto: TItemDto[]): TUseDashboard{
   const filterRevenueItems = itemDto.filter(item => item.itemType === REVENUE)
   const filterExpenseItems = itemDto.filter(item => item.itemType === EXPENSE)
 
@@ -58,9 +49,9 @@ function calculateDashboardInfo(itemDto: TItemDto[]): TDashboardInfo{
     }
   ]
 
-  const sortByAmount = _.sortBy(filterExpenseItems, item => item.amount)
+  const sortByAmount = _.sortBy(filterExpenseItems, item => item.amount).reverse()
 
-  const topThreeExpense = _.take(sortByAmount, 3).map(item => item.itemName + ' at ' + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.amount))
+  const topThreeExpense = _.take(sortByAmount, 3)
 
   return { status, revenue, expenses, savings, chartData, topThreeExpense }
 }
