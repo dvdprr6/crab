@@ -15,9 +15,6 @@ const chartConfig = {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    maxHeight: 1000
-  },
   contentContainer: {
     paddingHorizontal: 8,
     paddingVertical: 4
@@ -50,9 +47,8 @@ const Dashboard: FC<TScreenProps & TPropsFromRedux> = (props) => {
   }, [navigation])
 
   return(
-    <Layout>
+    <Layout style={{ flex: 1 }}>
       <List
-        style={styles.container}
         contentContainerStyle={styles.contentContainer}
         data={[0]}
         renderItem={() => (

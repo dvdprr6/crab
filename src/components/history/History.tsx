@@ -7,9 +7,9 @@ import { TPropsFromRedux, connector } from '@crab-reducers'
 import { useHistory } from './hooks'
 
 const chartConfig = {
-  backgroundGradientFrom: "#1E2923",
+  backgroundGradientFrom: '#1E2923',
   backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "#08130D",
+  backgroundGradientTo: '#08130D',
   backgroundGradientToOpacity: 0.5,
   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
   strokeWidth: 2, // optional, default 3
@@ -18,9 +18,6 @@ const chartConfig = {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    maxHeight: Dimensions.get('window').height - 150
-  },
   contentContainer: {
     paddingHorizontal: 8,
     paddingVertical: 4
@@ -35,9 +32,8 @@ const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
   const historyInfo = useHistory(itemDto)
 
   return (
-    <Layout>
+    <Layout style={{ flex: 1 }}>
       <List
-        style={styles.container}
         contentContainerStyle={styles.contentContainer}
         data={historyInfo}
         renderItem={props => (
