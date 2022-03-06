@@ -1,20 +1,10 @@
-import { TItemDto } from '@crab-models'
+import { TItemDto, TUseHistory } from '@crab-models'
 import moment from 'moment'
 import _ from 'lodash'
 import { EXPENSE, REVENUE, calculateLeverageStatus } from '@crab-utils'
 
-type THistoryInfo = {
-  status: string
-  month: string
-  revenue: number
-  expenses: number
-  savings: number
-  chartData: Array<any>
-  items: TItemDto[]
-}
-
-export function useHistory(itemDto: TItemDto[]): THistoryInfo[]{
-  let historyInfo: THistoryInfo[] = []
+export function useHistory(itemDto: TItemDto[]): TUseHistory[]{
+  let historyInfo: TUseHistory[] = []
 
   if(!_.isEmpty(itemDto)){
     historyInfo = calculateHistoryInfo(itemDto)
@@ -23,7 +13,7 @@ export function useHistory(itemDto: TItemDto[]): THistoryInfo[]{
   return historyInfo
 }
 
-function calculateHistoryInfo(itemDto: TItemDto[]): THistoryInfo[] {
+function calculateHistoryInfo(itemDto: TItemDto[]): TUseHistory[] {
   const groupByMonth = _.groupBy(itemDto, item => moment(item.createDate).format('MMMM'))
 
   const keys = _.keys(groupByMonth)

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Text, Layout, Card, List, ListItem, Icon, Button } from "@ui-kitten/components";
+import { Text, Layout, Card, List } from '@ui-kitten/components'
 import { PieChart } from 'react-native-chart-kit'
 import { StyleSheet, Dimensions } from 'react-native'
 import { TScreenProps } from '../types'

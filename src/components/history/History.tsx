@@ -61,7 +61,7 @@ const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
               chartConfig={chartConfig}
               accessor={'population'}
               backgroundColor={'transparent'}
-              paddingLeft={'15'}
+              paddingLeft={'0'}
               center={[10, 10]}
             />
           </Card>
