@@ -2,19 +2,11 @@ import { TItemDto } from '@crab-models'
 import moment from 'moment'
 import _ from 'lodash'
 import { EXPENSE, REVENUE, GREEN_STATUS, calculateLeverageStatus } from '@crab-utils'
+import { TUseMonth } from '@crab-models'
 
-type TMonthInfo = {
-  status: string
-  month: string
-  revenue: number
-  expenses: number
-  savings: number
-  items: TItemDto[]
-}
+export function useMonth(itemDto: TItemDto[]): TUseMonth {
 
-export function useMonth(itemDto: TItemDto[]): TMonthInfo {
-
-  let monthInfo: TMonthInfo = {
+  let monthInfo: TUseMonth = {
     status: GREEN_STATUS,
     month: moment().format('MMMM'),
     revenue: 0.00,
@@ -30,7 +22,7 @@ export function useMonth(itemDto: TItemDto[]): TMonthInfo {
   return monthInfo
 }
 
-function calculateMonthInfo(itemDto: TItemDto[]): TMonthInfo{
+function calculateMonthInfo(itemDto: TItemDto[]): TUseMonth{
   const sortedItemDescending = _.sortBy(itemDto, item => moment(item.createDate).millisecond()).reverse()
 
   const firstItem = _.head(sortedItemDescending)
