@@ -19,7 +19,6 @@ public abstract class ItemDtoToItemEntityMapper {
 
     @Mapping(source = "id", target = "id", qualifiedByName = { "setObjectId" })
     @Mapping(source = "createDate", target = "createDate", qualifiedByName = { "setCreateDate" })
-    @Mapping(source = "modifiedDate", target = "modifiedDate", qualifiedByName = { "setModifiedDate" })
     public abstract ItemEntity itemDtoToItemEntity(ItemDto itemDto);
 
     @Named("setObjectId")
@@ -49,11 +48,4 @@ public abstract class ItemDtoToItemEntityMapper {
 
         return date;
     }
-
-    @Named("setModifiedDate")
-    public Date setModifiedDate(String dateString){
-        Calendar calendar = Calendar.getInstance();
-        return calendar.getTime();
-    }
-
 }

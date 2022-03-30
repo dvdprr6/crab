@@ -31,12 +31,9 @@ public class ItemRepository {
             for(ItemEntity item : itemEntityRealm){
                 ItemEntity itemEntity = new ItemEntity();
                 itemEntity.setId(item.getId());
-                itemEntity.setItemName(item.getItemName());
                 itemEntity.setAmount(item.getAmount());
                 itemEntity.setRecurring(item.getRecurring());
-                itemEntity.setItemType(item.getItemType());
                 itemEntity.setCreateDate(item.getCreateDate());
-                itemEntity.setModifiedDate(item.getModifiedDate());
                 itemEntityList.add(itemEntity);
             }
 

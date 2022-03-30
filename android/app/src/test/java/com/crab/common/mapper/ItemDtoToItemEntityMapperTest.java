@@ -20,12 +20,9 @@ public class ItemDtoToItemEntityMapperTest {
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(objectId.toHexString());
-        itemDto.setItemName("TestItem");
         itemDto.setAmount(338.00F);
         itemDto.setRecurring(false);
-        itemDto.setItemType("Expense");
         itemDto.setCreateDate(dateString);
-        itemDto.setModifiedDate(dateString);
 
         ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
 
@@ -40,12 +37,9 @@ public class ItemDtoToItemEntityMapperTest {
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(null);
-        itemDto.setItemName("TestItem");
         itemDto.setAmount(338.00F);
         itemDto.setRecurring(false);
-        itemDto.setItemType("Expense");
         itemDto.setCreateDate(dateString);
-        itemDto.setModifiedDate(dateString);
 
         ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
 
@@ -61,12 +55,9 @@ public class ItemDtoToItemEntityMapperTest {
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(objectId.toHexString());
-        itemDto.setItemName("TestItem");
         itemDto.setAmount(338.00F);
         itemDto.setRecurring(false);
-        itemDto.setItemType("Expense");
         itemDto.setCreateDate(null);
-        itemDto.setModifiedDate(dateString);
 
         ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
 
@@ -82,12 +73,9 @@ public class ItemDtoToItemEntityMapperTest {
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(objectId.toHexString());
-        itemDto.setItemName("TestItem");
         itemDto.setAmount(338.00F);
         itemDto.setRecurring(false);
-        itemDto.setItemType("Expense");
         itemDto.setCreateDate(dateString);
-        itemDto.setModifiedDate(null);
 
         ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
 

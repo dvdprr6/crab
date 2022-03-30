@@ -2,12 +2,11 @@ package com.crab.models.dto;
 
 public class ItemDto {
     private String id;
-    private String itemName;
+    private String name;
     private Float amount;
     private Boolean recurring;
-    private String itemType;
+    private String type;
     private String createDate;
-    private String modifiedDate;
 
     public ItemDto() {}
 
@@ -19,12 +18,12 @@ public class ItemDto {
         this.id = id;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Float getAmount() {
@@ -43,12 +42,12 @@ public class ItemDto {
         this.recurring = recurring;
     }
 
-    public String getItemType() {
-        return itemType;
+    public String getType() {
+        return type;
     }
 
-    public void setItemType(String itemType) {
-        this.itemType = itemType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getCreateDate() {
@@ -57,13 +56,5 @@ public class ItemDto {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
-    }
-
-    public String getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(String modifiedDate) {
-        this.modifiedDate = modifiedDate;
     }
 }

@@ -7,6 +7,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { DashboardScreen } from './dashboard'
 import { MonthScreen } from './month'
+import { WalletScreen } from './wallet'
 import { HistoryScreen } from './history'
 import { DetailsScreen } from './details'
 import { SplashScreen } from './splash'
@@ -36,7 +37,8 @@ const Tabs = () => {
   return (
     <Navigator screenOptions={{ headerShown: false }} tabBar={props => <BottomTabBar {...props} />}>
       <Screen name={DASHBOARD_SCREEN} component={DashboardScreen} />
-      <Screen name={MONTH_SCREEN} component={MonthScreen} />
+      {/*<Screen name={MONTH_SCREEN} component={MonthScreen} />*/}
+      <Screen name={MONTH_SCREEN} component={WalletScreen} />
       <Screen name={HISTORY_SCREEN} component={HistoryScreen} />
     </Navigator>
   )

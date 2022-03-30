@@ -5,6 +5,8 @@ import org.bson.types.ObjectId;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.RealmField;
@@ -17,8 +19,8 @@ public class ItemEntity extends RealmObject {
     private ObjectId id;
 
     @Required
-    @RealmField(name = "item_name")
-    private String itemName;
+    @RealmField(name = "name")
+    private String name;
 
     @Required
     @RealmField(name = "amount")
@@ -29,16 +31,15 @@ public class ItemEntity extends RealmObject {
     private Boolean recurring;
 
     @Required
-    @RealmField(name = "item_type")
-    private String itemType;
+    @RealmField(name = "type")
+    private String type;
 
     @Required
     @RealmField(name = "create_date")
     private Date createDate;
 
-    @Required
-    @RealmField(name = "modified_date")
-    private Date modifiedDate;
+    @LinkingObjects("items")
+    private final RealmResults<WalletEntity> wallet = null;
 
     public ItemEntity() {}
 
@@ -50,12 +51,12 @@ public class ItemEntity extends RealmObject {
         this.id = id;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Float getAmount() {
@@ -74,12 +75,12 @@ public class ItemEntity extends RealmObject {
         this.recurring = recurring;
     }
 
-    public String getItemType() {
-        return itemType;
+    public String getType() {
+        return type;
     }
 
-    public void setItemType(String itemType) {
-        this.itemType = itemType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Date getCreateDate() {
@@ -88,13 +89,5 @@ public class ItemEntity extends RealmObject {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
     }
 }

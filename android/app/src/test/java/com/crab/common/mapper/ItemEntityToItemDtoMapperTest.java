@@ -22,12 +22,9 @@ public class ItemEntityToItemDtoMapperTest {
 
         ItemEntity itemEntity = new ItemEntity();
         itemEntity.setId(objectId);
-        itemEntity.setItemName("TestItem");
         itemEntity.setAmount(3673.00F);
         itemEntity.setRecurring(false);
-        itemEntity.setItemType("Revenue");
         itemEntity.setCreateDate(createDate);
-        itemEntity.setModifiedDate(modifiedDate);
 
         ItemEntityToItemDtoMapper itemEntityToItemDtoMapper = Mappers.getMapper(ItemEntityToItemDtoMapper.class);
 

@@ -1,9 +1,11 @@
 import { NativeModules } from 'react-native'
 
 const {
-  Item
+  Item,
+  Wallet
 } = NativeModules
 
 export {
-  Item
+  Item,
+  Wallet
 }

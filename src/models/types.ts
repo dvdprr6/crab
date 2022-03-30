@@ -2,6 +2,12 @@ import { RenderProp } from '@ui-kitten/components/devsupport'
 
 /** DTOs */
 
+export type TWalletDto = {
+  id?: string
+  name: string
+  createDate?: string
+}
+
 export type TItemDto = {
   id?: string
   itemName: string
