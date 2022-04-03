@@ -1,39 +1,20 @@
 package com.crab.models.entities;
 
-import org.bson.types.ObjectId;
+import java.util.List;
 
-import java.util.Date;
-
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
-import io.realm.annotations.RealmField;
-import io.realm.annotations.Required;
-
-@RealmClass(name = "wallet")
-public class WalletEntity extends RealmObject {
-    @PrimaryKey
-    @RealmField(name = "_id")
-    private ObjectId id;
-
-    @Required
-    @RealmField(name = "name")
+public class WalletEntity {
+    private String id;
     private String name;
-
-    @Required
-    @RealmField(name = "create_date")
-    private Date createDate;
-
-    private RealmList<ItemEntity> items;
+    private String createDate;
+    private List<ItemEntity> items;
 
     public WalletEntity(){}
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -45,19 +26,19 @@ public class WalletEntity extends RealmObject {
         this.name = name;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
-    public RealmList<ItemEntity> getItems() {
+    public List<ItemEntity> getItems() {
         return items;
     }
 
-    public void setItems(RealmList<ItemEntity> items) {
+    public void setItems(List<ItemEntity> items) {
         this.items = items;
     }
 }

@@ -131,6 +131,11 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    sourceSets{
+        main { java.srcDirs = ['src/main/java'] }
+        test { java.srcDirs = ['src/test/java'] }
+    }
+
     defaultConfig {
         applicationId "com.crab"
         minSdkVersion rootProject.ext.minSdkVersion

@@ -15,14 +15,17 @@ public class ItemDtoToItemEntityMapperTest {
 
     @Test
     public void convertItemDtoToItemEntity(){
-        String dateString = generateDate();
+        Calendar calendar = Calendar.getInstance();
+        String date = calendar.getTime().toString();
+
         ObjectId objectId = new ObjectId();
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(objectId.toHexString());
+        itemDto.setName("Item One");
         itemDto.setAmount(338.00F);
         itemDto.setRecurring(false);
-        itemDto.setCreateDate(dateString);
+        itemDto.setCreateDate(date);
 
         ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
 
@@ -33,13 +36,14 @@ public class ItemDtoToItemEntityMapperTest {
 
     @Test
     public void convertItemDtoToItemEntityWithoutObjectId(){
-        String dateString = generateDate();
+        Calendar calendar = Calendar.getInstance();
+        String date = calendar.getTime().toString();
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(null);
         itemDto.setAmount(338.00F);
         itemDto.setRecurring(false);
-        itemDto.setCreateDate(dateString);
+        itemDto.setCreateDate(date);
 
         ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
 
@@ -50,7 +54,6 @@ public class ItemDtoToItemEntityMapperTest {
 
     @Test
     public void convertItemDtoToItemEntityWithoutCreateDate(){
-        String dateString = generateDate();
         ObjectId objectId = new ObjectId();
 
         ItemDto itemDto = new ItemDto();
@@ -68,26 +71,21 @@ public class ItemDtoToItemEntityMapperTest {
 
     @Test
     public void convertItemDtoToItemEntityWithoutModifiedDate(){
-        String dateString = generateDate();
+        Calendar calendar = Calendar.getInstance();
+        String date = calendar.getTime().toString();
+
         ObjectId objectId = new ObjectId();
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(objectId.toHexString());
         itemDto.setAmount(338.00F);
         itemDto.setRecurring(false);
-        itemDto.setCreateDate(dateString);
+        itemDto.setCreateDate(date);
 
         ItemDtoToItemEntityMapper itemDtoToItemEntityMapper = Mappers.getMapper(ItemDtoToItemEntityMapper.class);
 
         ItemEntity itemEntity = itemDtoToItemEntityMapper.itemDtoToItemEntity(itemDto);
 
         assert(itemEntity != null);
-    }
-
-    private String generateDate(){
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT);
-
-        return simpleDateFormat.format(calendar.getTime());
     }
 }

@@ -7,6 +7,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 
 public class WalletModule extends ReactContextBaseJavaModule {
@@ -25,6 +26,13 @@ public class WalletModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getAllWallets(Promise promise){
+        WritableArray writableArray = walletService.getAllWallets();
+        promise.resolve(writableArray);
+    }
+
+    @ReactMethod
+    public void upsertWallet(ReadableMap readableMap, Promise promise){
+        walletService.upsertWallet(readableMap);
         WritableArray writableArray = walletService.getAllWallets();
         promise.resolve(writableArray);
     }

@@ -16,12 +16,9 @@ public class ItemEntityToItemDtoMapperTest {
     public void convertItemEntityToItemDtoTest(){
         Calendar calendar = Calendar.getInstance();
 
-        Date createDate = calendar.getTime();
-        Date modifiedDate = calendar.getTime();
-        ObjectId objectId = new ObjectId();
+        String createDate = calendar.getTime().toString();
 
         ItemEntity itemEntity = new ItemEntity();
-        itemEntity.setId(objectId);
         itemEntity.setAmount(3673.00F);
         itemEntity.setRecurring(false);
         itemEntity.setCreateDate(createDate);

@@ -15,18 +15,26 @@ import {
   TYearToDateAction,
   TYearToDateAllState
 } from './ytd'
-import { TItemDto } from '@crab-models'
+import {
+  getWalletsDetails,
+  createWallet,
+  TWalletDetailsAction,
+  TWalletDetailsAllState,
+  walletDetailsReducer
+} from './wallet'
+import { TItemDto, TWalletDto } from '@crab-models'
 
 const THUNK_TIMEOUT = 1500
 
-type TActions = TMonthToDateAction | TYearToDateAction
-type TStates = TMonthToDateAllState | TYearToDateAllState
+type TActions = TMonthToDateAction | TYearToDateAction | TWalletDetailsAction
+type TStates = TMonthToDateAllState | TYearToDateAllState | TWalletDetailsAllState
 
 type TThunkResult<R> = ThunkAction<R, TStates, undefined, TActions>
 
 const rootReducers = combineReducers({
   monthToDateItems: monthToDateAllReducer,
-  yearToDateItems: yearToDateAllReducer
+  yearToDateItems: yearToDateAllReducer,
+  walletDetails: walletDetailsReducer
 })
 
 export const store = createStore(rootReducers, applyMiddleware(thunk as ThunkMiddleware<TStates, TActions>))
@@ -34,9 +42,12 @@ export type TRootState = ReturnType<typeof rootReducers>
 export type TAppDispatch = typeof store.dispatch
 
 const mapStateToProps = (state: TRootState) => ({
-  /** ITEM STATE */
+  /** ITEM STATES */
   monthToDateItems: state.monthToDateItems.payload,
-  yearToDateItems: state.yearToDateItems.payload
+  yearToDateItems: state.yearToDateItems.payload,
+
+  /** WALLET STATES */
+  walletDetails: state.walletDetails.payload
 })
 
 export const connector = connect(mapStateToProps)
@@ -81,6 +92,32 @@ export function deleteMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<
           .then(() => getYearToDateItems().then(success => dispatch(success)))
 
         resolve(monthToDateAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function getAllWalletsThunk(): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const walletsAction = getWalletsDetails()
+          .then(success => dispatch(success))
+
+        resolve(walletsAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function createWalletThunk(walletDto: TWalletDto): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const walletsAction = createWallet(walletDto)
+          .then(success => dispatch(success))
+
+        resolve(walletsAction)
       }, THUNK_TIMEOUT)
     })
   }

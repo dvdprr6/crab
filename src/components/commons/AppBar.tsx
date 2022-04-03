@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import {
   Text,
-  TopNavigation,
+  TopNavigation
 } from '@ui-kitten/components'
 import { TAppBar } from '@crab-models'
 

@@ -1,20 +1,14 @@
 import React, { FC, useEffect } from 'react'
 import { Layout, Text, Modal, Button, Card, Radio, Spinner } from '@ui-kitten/components'
-import { TMonthForm } from '@crab-models'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { ViewProps, StyleSheet, GestureResponderEvent, Dimensions } from 'react-native'
-import { TextFieldControl, CheckBoxControl, RadioGroupControl } from '@crab-common-components'
-import { ITEM_TYPES } from '@crab-utils'
+import { TextFieldControl } from '@crab-common-components'
+import { TWalletForm } from '@crab-models'
 
 const schema = yup.object().shape({
-  itemName: yup.string().required('Is Required'),
-  amount: yup.number().test(
-    'maxDigitsAfterDecimal',
-    'Number field must have 2 digits after decimal or less',
-    (number) => /^\d+(\.\d{1,2})?$/.test(String(number))
-  )
+  name: yup.string().required('Is Required')
 })
 
 const styles = StyleSheet.create({
@@ -61,16 +55,16 @@ const Footer: FC<{
   )
 }
 
-const MonthForm: FC<{
+const WalletForm: FC<{
   title: string
   open: boolean
-  onSubmit: (form: TMonthForm) => void
+  onSubmit: (form: TWalletForm) => void
   onClose: () => void
   loading: boolean
-  initialValues?: TMonthForm
+  initialValues?: TWalletForm
 }> = (props) => {
   const { title, open, onSubmit, onClose, loading, initialValues } = props
-  const { control, handleSubmit, reset, setValue } = useForm<TMonthForm>({ resolver: yupResolver(schema) })
+  const { control, handleSubmit, reset, setValue } = useForm<TWalletForm>({ resolver: yupResolver(schema) })
 
   useEffect(() => {
     setValue('id', initialValues?.id)
@@ -79,7 +73,7 @@ const MonthForm: FC<{
 
   useEffect(() => {
     if(!open){
-      reset() // clear form
+      reset()
     }
   }, [open])
 
@@ -100,58 +94,9 @@ const MonthForm: FC<{
                 <TextFieldControl
                   value={value}
                   onChange={onChange}
-                  placeholder={'Item Expense Name'}
+                  placeholder={'Wallet Name'}
                   label={errors.name?.message}
                 />
-              )}
-            />
-          </Layout>
-          <Layout style={styles.form}>
-            <Controller
-              name={'amount'}
-              defaultValue={initialValues?.amount}
-              control={control}
-              render={({ field: { value, onChange }, formState: { errors }}) => (
-                <TextFieldControl
-                  value={value?.toString()}
-                  onChange={onChange}
-                  placeholder={'Amount ($)'}
-                  keyboardType={'numeric'}
-                  label={errors.amount?.message}
-                />
-              )}
-            />
-          </Layout>
-          <Layout style={styles.form}>
-            <Controller
-              name={'recurring'}
-              defaultValue={initialValues?.recurring || false}
-              control={control}
-              render={({ field: { value, onChange }}) => (
-                <CheckBoxControl
-                  value={value}
-                  title={'Recurring'}
-                  onChange={onChange}
-                />
-              )}
-            />
-          </Layout>
-          <Layout style={styles.form}>
-            <Controller
-              name={'type'}
-              defaultValue={initialValues?.type || ITEM_TYPES[0]}
-              control={control}
-              render={({ field: { value, onChange }}) => (
-                <RadioGroupControl
-                  value={value}
-                  title={'Item Types'}
-                  options={ITEM_TYPES}
-                  onChange={onChange}
-                >
-                  {ITEM_TYPES.map((item, index) => (
-                    <Radio key={index}>{item}</Radio>
-                  ))}
-                </RadioGroupControl>
               )}
             />
           </Layout>
@@ -161,4 +106,4 @@ const MonthForm: FC<{
   )
 }
 
-export default MonthForm
+export default WalletForm

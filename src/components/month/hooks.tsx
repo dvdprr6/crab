@@ -29,8 +29,8 @@ function calculateMonthInfo(itemDto: TItemDto[]): TUseMonth{
 
   const month = moment(firstItem?.createDate).format('MMMM')
 
-  const revenueItems = sortedItemDescending.filter(item => item.itemType === REVENUE).map(item => item.amount)
-  const expenseItems = sortedItemDescending.filter(item => item.itemType === EXPENSE).map(item => item.amount)
+  const revenueItems = sortedItemDescending.filter(item => item.type === REVENUE).map(item => item.amount)
+  const expenseItems = sortedItemDescending.filter(item => item.type === EXPENSE).map(item => item.amount)
 
   const revenue = _.sum(revenueItems)
   const expenses = _.sum(expenseItems)

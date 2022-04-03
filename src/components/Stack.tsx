@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   TRootStackParamList,
-  SPLASH_SCREEN, MAIN_SCREEN, DASHBOARD_SCREEN, MONTH_SCREEN, HISTORY_SCREEN, DETAILS_SCREEN
+  SPLASH_SCREEN, MAIN_SCREEN, DASHBOARD_SCREEN, MONTH_SCREEN, WALLET_SCREEN, HISTORY_SCREEN, DETAILS_SCREEN
 } from './types'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { DashboardScreen } from './dashboard'
@@ -38,7 +38,7 @@ const Tabs = () => {
     <Navigator screenOptions={{ headerShown: false }} tabBar={props => <BottomTabBar {...props} />}>
       <Screen name={DASHBOARD_SCREEN} component={DashboardScreen} />
       {/*<Screen name={MONTH_SCREEN} component={MonthScreen} />*/}
-      <Screen name={MONTH_SCREEN} component={WalletScreen} />
+      <Screen name={WALLET_SCREEN} component={WalletScreen} />
       <Screen name={HISTORY_SCREEN} component={HistoryScreen} />
     </Navigator>
   )

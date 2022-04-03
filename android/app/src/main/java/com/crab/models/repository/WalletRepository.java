@@ -2,8 +2,13 @@ package com.crab.models.repository;
 
 import android.util.Log;
 
+import com.crab.common.mapper.WalletEntityToWalletSchemaMapper;
+import com.crab.common.mapper.WalletSchemaToWalletEntityMapper;
 import com.crab.db.RealmDb;
 import com.crab.models.entities.WalletEntity;
+import com.crab.models.schema.WalletSchema;
+
+import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +26,17 @@ public class WalletRepository {
         List<WalletEntity> walletEntityList = new ArrayList<>();
 
         try{
-            List<WalletEntity> walletEntityRealm = realm
-                    .where(WalletEntity.class)
+            List<WalletSchema> walletSchemaList = realm
+                    .where(WalletSchema.class)
                     .findAll()
                     .stream()
                     .collect(Collectors.toList());
 
-            for(WalletEntity wallet : walletEntityRealm){
-                WalletEntity walletEntity = new WalletEntity();
-                walletEntity.setId(wallet.getId());
-                walletEntity.setName(wallet.getName());
-                walletEntity.setCreateDate(wallet.getCreateDate());
-            }
+            WalletSchemaToWalletEntityMapper walletSchemaToWalletEntityMapper = Mappers.getMapper(WalletSchemaToWalletEntityMapper.class);
+
+            walletEntityList = walletSchemaList.stream()
+                    .map(item -> walletSchemaToWalletEntityMapper.walletSchemaToWalletEntity(item))
+                    .collect(Collectors.toList());
 
         }catch(Exception e){
             Log.e("REALMDB", e.getMessage());
@@ -41,5 +45,22 @@ public class WalletRepository {
         }
 
         return walletEntityList;
+    }
+
+    public void upsert(WalletEntity walletEntity){
+        RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
+        Realm realm = Realm.getInstance(realmConfiguration);
+
+        WalletEntityToWalletSchemaMapper walletEntityToWalletSchemaMapper = Mappers.getMapper(WalletEntityToWalletSchemaMapper.class);
+
+        WalletSchema walletSchema = walletEntityToWalletSchemaMapper.walletEntityToWalletSchema(walletEntity);
+
+        try{
+            realm.executeTransaction(transaction -> transaction.insertOrUpdate(walletSchema));
+        }catch(Exception e){
+            Log.e("REALMDB", e.getMessage());
+        }finally {
+            realm.close();
+        }
     }
 }

@@ -1,10 +1,10 @@
-import { TAction, TPayloadDto, TState } from '../types'
-import { TWalletDto } from '@crab-models'
+import { TAction, TState } from '../types'
+import { TWalletDetailsDto } from '@crab-models'
 
-export const WALLET_GET_ALL_SUCCESS = 'WALLET_GET_ALL_SUCCESS'
+export const WALLET_DETAILS_GET_ALL_SUCCESS = 'WALLET_DETAILS_GET_ALL_SUCCESS'
 
-type TWalletGetAllSuccess = TAction<typeof WALLET_GET_ALL_SUCCESS, TPayloadDto<TWalletDto[]>>
+type TWalletDetailsGetAllSuccess = TAction<typeof WALLET_DETAILS_GET_ALL_SUCCESS, TWalletDetailsDto[]>
 
-export type TWalletAction = TWalletGetAllSuccess
+export type TWalletDetailsAction = TWalletDetailsGetAllSuccess
 
-export type TWalletAllState = TState<TWalletDto[]>
+export type TWalletDetailsAllState = TState<TWalletDetailsDto[]>

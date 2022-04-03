@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
 })
 
 const Month: FC<TPropsFromRedux> = (props) => {
-  const { monthToDateItems: { value: itemDto } } = props
-  const { status, month, revenue, expenses, savings, items } = useMonth(itemDto)
+  const { monthToDateItems } = props
+  const { status, month, revenue, expenses, savings, items } = useMonth(monthToDateItems)
   const [openNew, setOpenNew] = useState<boolean>(false)
   const [openEdit, setOpenEdit] = useState<boolean>(false)
   const [openDelete, setOpenDelete] = useState<boolean>(false)
@@ -163,7 +163,7 @@ const Month: FC<TPropsFromRedux> = (props) => {
                   onPress={() => onOpenEdit(item)}
                   key={item.id}
                   style={styles.card}
-                  status={item.itemType === EXPENSE ? 'danger' : 'success'}
+                  status={item.type === EXPENSE ? 'danger' : 'success'}
                   header={headerProps => (
                     <Layout {...headerProps} style={styles.button}>
                       <Button
@@ -177,7 +177,7 @@ const Month: FC<TPropsFromRedux> = (props) => {
                 >
                   <Layout style={styles.main}>
                     <Text>Item Name</Text>
-                    <Text>{item.itemName}</Text>
+                    <Text>{item.name}</Text>
                   </Layout>
                   <Layout style={styles.main}>
                     <Text>Amount</Text>
@@ -189,7 +189,7 @@ const Month: FC<TPropsFromRedux> = (props) => {
                   </Layout>
                   <Layout style={styles.main}>
                     <Text>Type</Text>
-                    <Text>{item.itemType}</Text>
+                    <Text>{item.type}</Text>
                   </Layout>
                   <Layout style={styles.main}>
                     <Text>Is Re-occurring?</Text>

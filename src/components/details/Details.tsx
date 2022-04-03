@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  total: {
+  monetary: {
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
@@ -66,15 +66,15 @@ const Details: FC<TScreenProps> = (props) => {
           renderItem={() => (
             <Layout>
               <Card style={styles.card} disabled>
-                <Layout style={styles.total}>
+                <Layout style={styles.monetary}>
                   <Text>Total Month Revenue</Text>
                   <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(route.params?.revenue || 0)}</Text>
                 </Layout>
-                <Layout style={styles.total}>
+                <Layout style={styles.monetary}>
                   <Text>Total Month Expenses</Text>
                   <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(route.params?.expenses || 0)}</Text>
                 </Layout>
-                <Layout style={styles.total}>
+                <Layout style={styles.monetary}>
                   <Text>Total Month Savings</Text>
                   <Text>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(route.params?.savings || 0)}</Text>
                 </Layout>

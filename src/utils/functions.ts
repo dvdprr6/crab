@@ -15,3 +15,7 @@ export function calculateLeverageStatus(revenue: number, expenses: number): stri
 
   return status
 }
+
+export function currencyNumberFormat(value: number | bigint): string {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
+}

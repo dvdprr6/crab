@@ -2,8 +2,13 @@ package com.crab.models.repository;
 
 import android.util.Log;
 
+import com.crab.common.mapper.ItemEntityToItemSchemaMapper;
+import com.crab.common.mapper.ItemSchemaToItemEntityMapper;
 import com.crab.db.RealmDb;
 import com.crab.models.entities.ItemEntity;
+import com.crab.models.schema.ItemSchema;
+
+import org.mapstruct.factory.Mappers;
 
 import java.util.Date;
 import java.util.ArrayList;
@@ -21,21 +26,18 @@ public class ItemRepository {
         List<ItemEntity> itemEntityList = new ArrayList<>();
 
         try{
-            List<ItemEntity> itemEntityRealm = realm
-                    .where(ItemEntity.class)
+            List<ItemSchema> itemSchemaList = realm
+                    .where(ItemSchema.class)
                     .between("create_date", fromDate, toDate)
                     .findAll()
                     .stream()
                     .collect(Collectors.toList());
 
-            for(ItemEntity item : itemEntityRealm){
-                ItemEntity itemEntity = new ItemEntity();
-                itemEntity.setId(item.getId());
-                itemEntity.setAmount(item.getAmount());
-                itemEntity.setRecurring(item.getRecurring());
-                itemEntity.setCreateDate(item.getCreateDate());
-                itemEntityList.add(itemEntity);
-            }
+            ItemSchemaToItemEntityMapper itemSchemaToItemEntityMapper = Mappers.getMapper(ItemSchemaToItemEntityMapper.class);
+
+            itemEntityList = itemSchemaList.stream()
+                    .map(item -> itemSchemaToItemEntityMapper.itemSchemaToItemEntity(item))
+                    .collect(Collectors.toList());
 
         }catch(Exception e){
             Log.e("REALMDB", e.getMessage());
@@ -50,8 +52,12 @@ public class ItemRepository {
         RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
         Realm realm = Realm.getInstance(realmConfiguration);
 
+        ItemEntityToItemSchemaMapper itemEntityToItemSchemaMapper = Mappers.getMapper(ItemEntityToItemSchemaMapper.class);
+
+        ItemSchema itemSchema = itemEntityToItemSchemaMapper.itemEntityToItemSchema(itemEntity);
+
         try{
-            realm.executeTransaction(transaction -> transaction.insertOrUpdate(itemEntity));
+            realm.executeTransaction(transaction -> transaction.insertOrUpdate(itemSchema));
         }catch(Exception e){
             Log.e("REALMDB", e.getMessage());
         }finally {
@@ -63,9 +69,13 @@ public class ItemRepository {
         RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
         Realm realm = Realm.getInstance(realmConfiguration);
 
+        ItemEntityToItemSchemaMapper itemEntityToItemSchemaMapper = Mappers.getMapper(ItemEntityToItemSchemaMapper.class);
+
+        ItemSchema itemSchema = itemEntityToItemSchemaMapper.itemEntityToItemSchema(itemEntity);
+
         try{
             realm.executeTransaction(transaction -> {
-                ItemEntity item = transaction.where(ItemEntity.class).equalTo("id", itemEntity.getId()).findFirst();
+                ItemSchema item = transaction.where(ItemSchema.class).equalTo("id", itemSchema.getId()).findFirst();
                 item.deleteFromRealm();
                 item = null;
             });

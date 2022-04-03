@@ -1,16 +1,12 @@
-import { WALLET_GET_ALL_SUCCESS, TWalletAction, TWalletAllState } from './types'
+import { WALLET_DETAILS_GET_ALL_SUCCESS, TWalletDetailsAction, TWalletDetailsAllState } from './types'
 
-const INITIAL_ALL_STATE: TWalletAllState = {
-  payload: {
-    value: [],
-    isError: false,
-    error: ''
-  }
+const INITIAL_WALLET_DETAILS_STATE: TWalletDetailsAllState = {
+  payload: []
 }
 
-export function walletAllReducer(state = INITIAL_ALL_STATE, action: TWalletAction): TWalletAllState{
+export function walletDetailsReducer(state = INITIAL_WALLET_DETAILS_STATE, action: TWalletDetailsAction): TWalletDetailsAllState{
   switch(action.type){
-    case WALLET_GET_ALL_SUCCESS:
+    case WALLET_DETAILS_GET_ALL_SUCCESS:
       return { payload: action.payload }
     default:
       return state

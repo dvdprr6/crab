@@ -20,8 +20,8 @@ export function useDashboard(itemDto: TItemDto[]): TUseDashboard{
 }
 
 function calculateDashboardInfo(itemDto: TItemDto[]): TUseDashboard{
-  const filterRevenueItems = itemDto.filter(item => item.itemType === REVENUE)
-  const filterExpenseItems = itemDto.filter(item => item.itemType === EXPENSE)
+  const filterRevenueItems = itemDto.filter(item => item.type === REVENUE)
+  const filterExpenseItems = itemDto.filter(item => item.type === EXPENSE)
 
   const revenueItems = filterRevenueItems.map(item => item.amount)
   const expensesItems = filterExpenseItems.map(item => item.amount)
