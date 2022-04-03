@@ -97,7 +97,7 @@ export function deleteMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<
   }
 }
 
-export function getAllWalletsThunk(): TThunkResult<Promise<TActions>>{
+export function getAllWalletsDetailsThunk(): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {

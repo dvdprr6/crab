@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react'
+import React, { FC, useState, useCallback, useEffect } from 'react'
 import { Layout, TopNavigationAction } from '@ui-kitten/components'
 import { AppBar } from '@crab-common-components'
 import Wallet from './Wallet'
@@ -6,10 +6,11 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { TScreenNavigationProps, TScreenRouteProps } from '../types'
 import { Icon } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
-import { TPropsFromRedux, connector, TAppDispatch, createWalletThunk } from '@crab-reducers'
+import { TPropsFromRedux, connector, TAppDispatch, createWalletThunk, getAllWalletsDetailsThunk } from '@crab-reducers'
 import { useDispatch } from 'react-redux'
 import WalletForm from './WalletForm'
 import { TWalletForm } from '@crab-models'
+import { LoadingSpinner } from '@crab-common-components'
 
 const styles = StyleSheet.create({
   iconGroup: {
@@ -23,6 +24,7 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
   const [newWallet, setNewWallet] = useState<boolean>(false)
   const [newTransaction, setNewTransaction] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
+  const [screenLoading, setScreenLoading] = useState<boolean>(false)
   const navigation = useNavigation<TScreenNavigationProps>()
   const route = useRoute<TScreenRouteProps>()
   const dispatch: TAppDispatch = useDispatch()
@@ -38,6 +40,11 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
 
     dispatch(createWalletThunk(form)).then(() => setLoading(false))
   }
+
+  useEffect(() => {
+    setScreenLoading(true)
+    dispatch(getAllWalletsDetailsThunk()).then(() => setScreenLoading(false))
+  }, [])
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -55,13 +62,17 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
             </Layout>
           )}
         />
-        <Wallet
-          navigation={navigation}
-          route={route}
-          walletDetails={walletDetails}
-          newWallet={newWallet}
-          onOpenNewWallet={onOpenNewWallet}
-        />
+        {screenLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <Wallet
+            navigation={navigation}
+            route={route}
+            walletDetails={walletDetails}
+            newWallet={newWallet}
+            onOpenNewWallet={onOpenNewWallet}
+          />
+        )}
       </Layout>
       <Layout>
         <WalletForm
