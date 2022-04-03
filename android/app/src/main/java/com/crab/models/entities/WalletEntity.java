@@ -1,12 +1,13 @@
 package com.crab.models.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WalletEntity {
     private String id;
     private String name;
     private String createDate;
-    private List<ItemEntity> items;
+    private List<ItemEntity> items = new ArrayList<>();
 
     public WalletEntity(){}
 

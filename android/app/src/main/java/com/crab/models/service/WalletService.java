@@ -10,6 +10,7 @@ import com.crab.utils.ModelConverter;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 
+import org.bson.types.ObjectId;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class WalletService {
     }
 
     public WritableArray getAllWallets(){
-        List<WalletEntity> walletEntityList = walletRepository.getAllWallets();
+        List<WalletEntity> walletEntityList = walletRepository.getAll();
 
         WalletEntityToWalletDetailsMapper walletEntityToWalletDtoMapper = Mappers.getMapper(WalletEntityToWalletDetailsMapper.class);
 
@@ -36,12 +37,26 @@ public class WalletService {
         return writableArray;
     }
 
-    public void upsertWallet(ReadableMap readableMap){
+    public void createWallet(ReadableMap readableMap){
         WalletDto walletDto = ModelConverter.convertReadableMapToModel(readableMap, WalletDto.class);
 
         WalletDtoToWalletEntityMapper walletDtoToWalletEntityMapper = Mappers.getMapper(WalletDtoToWalletEntityMapper.class);
 
         WalletEntity walletEntity = walletDtoToWalletEntityMapper.walletDtoToWalletEntity(walletDto);
+
+        walletRepository.upsert(walletEntity);
+    }
+
+    public void updateWallet(ReadableMap readableMap){
+        WalletDto walletDto = ModelConverter.convertReadableMapToModel(readableMap, WalletDto.class);
+        WalletDtoToWalletEntityMapper walletDtoToWalletEntityMapper = Mappers.getMapper(WalletDtoToWalletEntityMapper.class);
+
+        ObjectId objectId = new ObjectId(walletDto.getId());
+
+        WalletEntity originalWalletEntity = walletRepository.getById(objectId);
+
+        WalletEntity walletEntity = walletDtoToWalletEntityMapper.walletDtoToWalletEntity(walletDto);
+        walletEntity.setItems(originalWalletEntity.getItems());
 
         walletRepository.upsert(walletEntity);
     }

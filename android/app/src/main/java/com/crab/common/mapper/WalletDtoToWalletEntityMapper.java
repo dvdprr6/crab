@@ -6,6 +6,8 @@ import com.crab.models.entities.WalletEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.ArrayList;
+
 @Mapper(uses = ItemDtoToItemEntityMapper.class)
 public abstract class WalletDtoToWalletEntityMapper{
     public abstract WalletEntity walletDtoToWalletEntity(WalletDto walletDto);

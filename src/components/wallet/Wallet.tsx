@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import { Layout, Text, Card, List, Button, Icon } from "@ui-kitten/components";
+import { Layout, Text, Card, List, Button, Icon } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
 import { TScreenProps } from '../types'
-import { TWalletDetailsDto } from '@crab-models'
+import { TWalletDetailsDto, TWalletDto } from '@crab-models'
 import { currencyNumberFormat } from '@crab-utils'
 
 const styles = StyleSheet.create({
@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
 })
 
 const Wallet: FC<TScreenProps & {
-  walletDetails: TWalletDetailsDto[],
-  newWallet: boolean,
-  onOpenNewWallet: () => void
+  walletDetails: TWalletDetailsDto[]
+  onSelectedWalletForEdit: (walletDetails: TWalletDto) => void
+  onSelectedWalletForDelete: (walletDetails: TWalletDto) => void
 }> = (props) => {
-  const { navigation, route, walletDetails } = props
+  const { navigation, route, walletDetails, onSelectedWalletForEdit, onSelectedWalletForDelete } = props
 
   return(
     <Layout style={{ flex: 1 }}>
@@ -36,6 +36,7 @@ const Wallet: FC<TScreenProps & {
         data={walletDetails}
         renderItem={props => (
           <Card
+            onPress={() => undefined}
             style={styles.card}
             header={headerProps => (
               <Layout {...headerProps}>
@@ -45,13 +46,13 @@ const Wallet: FC<TScreenProps & {
                   </Text>
                   <Layout style={styles.buttonGroup}>
                     <Button
-                      onPress={() => undefined}
+                      onPress={() => onSelectedWalletForEdit({ id: props.item.id, name: props.item.name, createDate: props.item.createDate })}
                       size={'small'}
                       appearance={'ghost'}
                       accessoryLeft={(props) => <Icon {...props} name={'edit-outline'} />}
                     />
                     <Button
-                      onPress={() => undefined}
+                      onPress={() => onSelectedWalletForDelete({ id: props.item.id, name: props.item.name, createDate: props.item.createDate })}
                       size={'small'}
                       appearance={'ghost'}
                       accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}

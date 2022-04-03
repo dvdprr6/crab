@@ -31,8 +31,15 @@ public class WalletModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void upsertWallet(ReadableMap readableMap, Promise promise){
-        walletService.upsertWallet(readableMap);
+    public void createWallet(ReadableMap readableMap, Promise promise){
+        walletService.createWallet(readableMap);
+        WritableArray writableArray = walletService.getAllWallets();
+        promise.resolve(writableArray);
+    }
+
+    @ReactMethod
+    public void updateWallet(ReadableMap readableMap, Promise promise){
+        walletService.updateWallet(readableMap);
         WritableArray writableArray = walletService.getAllWallets();
         promise.resolve(writableArray);
     }

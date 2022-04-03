@@ -8,6 +8,7 @@ import com.crab.db.RealmDb;
 import com.crab.models.entities.WalletEntity;
 import com.crab.models.schema.WalletSchema;
 
+import org.bson.types.ObjectId;
 import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import io.realm.RealmConfiguration;
 
 public class WalletRepository {
 
-    public List<WalletEntity> getAllWallets(){
+    public List<WalletEntity> getAll(){
         RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
         Realm realm = Realm.getInstance(realmConfiguration);
 
@@ -45,6 +46,29 @@ public class WalletRepository {
         }
 
         return walletEntityList;
+    }
+
+    public WalletEntity getById(ObjectId id){
+        RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
+        Realm realm = Realm.getInstance(realmConfiguration);
+
+        WalletEntity walletEntity = null;
+
+        try{
+            WalletSchema walletSchema = realm
+                    .where(WalletSchema.class)
+                    .equalTo("_id", id)
+                    .findFirst();
+
+            WalletSchemaToWalletEntityMapper walletSchemaToWalletEntityMapper = Mappers.getMapper(WalletSchemaToWalletEntityMapper.class);
+            walletEntity = walletSchemaToWalletEntityMapper.walletSchemaToWalletEntity(walletSchema);
+        }catch(Exception e){
+            Log.e("REALMDB", e.getMessage());
+        }finally {
+            realm.close();
+        }
+
+        return walletEntity;
     }
 
     public void upsert(WalletEntity walletEntity){

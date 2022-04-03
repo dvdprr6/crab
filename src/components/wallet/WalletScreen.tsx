@@ -6,10 +6,10 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { TScreenNavigationProps, TScreenRouteProps } from '../types'
 import { Icon } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
-import { TPropsFromRedux, connector, TAppDispatch, createWalletThunk, getAllWalletsDetailsThunk } from '@crab-reducers'
+import { TPropsFromRedux, connector, TAppDispatch, createWalletThunk, getAllWalletsDetailsThunk, updateWalletThunk } from '@crab-reducers'
 import { useDispatch } from 'react-redux'
 import WalletForm from './WalletForm'
-import { TWalletForm } from '@crab-models'
+import { TWalletDetailsDto, TWalletDto, TWalletForm } from '@crab-models'
 import { LoadingSpinner } from '@crab-common-components'
 
 const styles = StyleSheet.create({
@@ -22,15 +22,19 @@ const styles = StyleSheet.create({
 const WalletScreen: FC<TPropsFromRedux> = (props) => {
   const { walletDetails } = props
   const [newWallet, setNewWallet] = useState<boolean>(false)
+  const [editWallet, setEditWallet] = useState<boolean>(false)
   const [newTransaction, setNewTransaction] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [screenLoading, setScreenLoading] = useState<boolean>(false)
+  const [selectedWallet, setSelectedWallet] = useState<TWalletDto>({} as TWalletDto)
   const navigation = useNavigation<TScreenNavigationProps>()
   const route = useRoute<TScreenRouteProps>()
   const dispatch: TAppDispatch = useDispatch()
 
   const onOpenNewWallet = useCallback(() => setNewWallet(true), [newWallet])
-  const onOpenCloseWallet = useCallback(() => setNewWallet(false), [newWallet])
+  const onCloseNewWallet = useCallback(() => setNewWallet(false), [newWallet])
+
+  const onCloseEditWallet = useCallback(() => setEditWallet(false), [editWallet])
 
   const onOpenNewTransaction = useCallback(() => setNewTransaction(true), [newTransaction])
   const onOpenCloseTransaction = useCallback(() => setNewTransaction(false), [newTransaction])
@@ -38,7 +42,28 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
   const onSubmitWallet = (form: TWalletForm) => {
     setLoading(true)
 
-    dispatch(createWalletThunk(form)).then(() => setLoading(false))
+    dispatch(createWalletThunk(form)).then(() => {
+      setLoading(false)
+      setNewWallet(false)
+    })
+  }
+
+  const onEditWallet = (form: TWalletForm) => {
+    setLoading(true)
+
+    dispatch(updateWalletThunk(form)).then(() => {
+      setLoading(false)
+      setEditWallet(false)
+    })
+  }
+
+  const onSelectedWalletForEdit = (walletDto: TWalletDto) => {
+    setSelectedWallet(walletDto)
+    setEditWallet(true)
+  }
+
+  const onSelectedWalletForDelete = (walletDto: TWalletDto) => {
+
   }
 
   useEffect(() => {
@@ -69,8 +94,8 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
             navigation={navigation}
             route={route}
             walletDetails={walletDetails}
-            newWallet={newWallet}
-            onOpenNewWallet={onOpenNewWallet}
+            onSelectedWalletForEdit={onSelectedWalletForEdit}
+            onSelectedWalletForDelete={onSelectedWalletForDelete}
           />
         )}
       </Layout>
@@ -79,8 +104,18 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
           title={'New Wallet'}
           open={newWallet}
           onSubmit={onSubmitWallet}
-          onClose={onOpenCloseWallet}
+          onClose={onCloseNewWallet}
           loading={loading}
+        />
+      </Layout>
+      <Layout>
+        <WalletForm
+          title={'Edit Wallet'}
+          open={editWallet}
+          onSubmit={onEditWallet}
+          onClose={onCloseEditWallet}
+          loading={loading}
+          initialValues={selectedWallet}
         />
       </Layout>
     </Layout>
