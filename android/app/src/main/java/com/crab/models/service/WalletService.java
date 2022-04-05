@@ -4,7 +4,6 @@ import com.crab.common.mapper.WalletEntityToWalletDetailsMapper;
 import com.crab.common.mapper.WalletDtoToWalletEntityMapper;
 import com.crab.models.dto.WalletDetailsDto;
 import com.crab.models.dto.WalletDto;
-import com.crab.models.entities.ItemEntity;
 import com.crab.models.entities.WalletEntity;
 import com.crab.models.repository.WalletRepository;
 import com.crab.utils.Constants;
@@ -15,8 +14,6 @@ import com.facebook.react.bridge.WritableArray;
 import org.bson.types.ObjectId;
 import org.mapstruct.factory.Mappers;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
