@@ -3,6 +3,7 @@ import {
   WALLET_DETAILS_CREATE_SUCCESS,
   TWalletDetailsAction,
   WALLET_DETAILS_UPDATE_SUCCESS,
+  WALLET_DETAILS_DELETE_SUCCESS,
 } from './types'
 import { Wallet } from '@crab-modules'
 import { createAction } from '../types'
@@ -26,5 +27,12 @@ export function updateWallet(walletDto: TWalletDto): Promise<TWalletDetailsActio
   return new Promise<TWalletDetailsAction>(async resolve => {
     const walletDetails = await Wallet.updateWallet(walletDto)
     resolve(createAction(WALLET_DETAILS_UPDATE_SUCCESS, walletDetails))
+  })
+}
+
+export function deleteWallet(walletDto: TWalletDto): Promise<TWalletDetailsAction>{
+  return new Promise<TWalletDetailsAction>(async resolve => {
+    const walletDetails = await Wallet.deleteWallet(walletDto)
+    resolve(createAction(WALLET_DETAILS_DELETE_SUCCESS, walletDetails))
   })
 }

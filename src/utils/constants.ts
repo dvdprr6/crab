@@ -7,3 +7,5 @@ export const GREEN_STATUS = 'Green'
 export const YELLOW_STATUS = 'Yellow'
 export const RED_STATUS = 'Red'
 
+export const UNASSIGNED_WALLET = 'UNASSIGNED'
+

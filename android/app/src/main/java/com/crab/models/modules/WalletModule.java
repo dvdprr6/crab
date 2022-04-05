@@ -43,4 +43,11 @@ public class WalletModule extends ReactContextBaseJavaModule {
         WritableArray writableArray = walletService.getAllWallets();
         promise.resolve(writableArray);
     }
+
+    @ReactMethod
+    public void deleteWallet(ReadableMap readableMap, Promise promise){
+        walletService.deleteWallet(readableMap);
+        WritableArray writableArray = walletService.getAllWallets();
+        promise.resolve(writableArray);
+    }
 }

@@ -71,6 +71,28 @@ public class WalletRepository {
         return walletEntity;
     }
 
+    public WalletEntity getByName(String name){
+        RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
+        Realm realm = Realm.getInstance(realmConfiguration);
+
+        WalletEntity walletEntity = null;
+
+        try{
+            WalletSchema walletSchema = realm
+                    .where(WalletSchema.class)
+                    .equalTo("name", name)
+                    .findFirst();
+            WalletSchemaToWalletEntityMapper walletSchemaToWalletEntityMapper = Mappers.getMapper(WalletSchemaToWalletEntityMapper.class);
+            walletEntity = walletSchemaToWalletEntityMapper.walletSchemaToWalletEntity(walletSchema);
+        }catch(Exception e){
+            Log.e("REALMDB", e.getMessage());
+        }finally {
+            realm.close();
+        }
+
+        return walletEntity;
+    }
+
     public void upsert(WalletEntity walletEntity){
         RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
         Realm realm = Realm.getInstance(realmConfiguration);
@@ -81,6 +103,28 @@ public class WalletRepository {
 
         try{
             realm.executeTransaction(transaction -> transaction.insertOrUpdate(walletSchema));
+        }catch(Exception e){
+            Log.e("REALMDB", e.getMessage());
+        }finally {
+            realm.close();
+        }
+    }
+
+    public void delete(WalletEntity walletEntity){
+        RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
+        Realm realm = Realm.getInstance(realmConfiguration);
+
+        WalletEntityToWalletSchemaMapper walletEntityToWalletSchemaMapper = Mappers.getMapper(WalletEntityToWalletSchemaMapper.class);
+
+        WalletSchema walletSchema = walletEntityToWalletSchemaMapper.walletEntityToWalletSchema(walletEntity);
+
+        try{
+            realm.executeTransaction(transaction -> {
+                WalletSchema wallet = transaction.where(WalletSchema.class).equalTo("id", walletSchema.getId()).findFirst();
+                wallet.getItems().deleteAllFromRealm();
+                wallet.deleteFromRealm();
+                wallet = null;
+            });
         }catch(Exception e){
             Log.e("REALMDB", e.getMessage());
         }finally {

@@ -6,11 +6,19 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { TScreenNavigationProps, TScreenRouteProps } from '../types'
 import { Icon } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
-import { TPropsFromRedux, connector, TAppDispatch, createWalletThunk, getAllWalletsDetailsThunk, updateWalletThunk } from '@crab-reducers'
+import {
+  TPropsFromRedux,
+  connector,
+  TAppDispatch,
+  createWalletThunk,
+  getAllWalletsDetailsThunk,
+  updateWalletThunk,
+  deleteWalletThunk,
+} from '@crab-reducers'
 import { useDispatch } from 'react-redux'
 import WalletForm from './WalletForm'
 import { TWalletDetailsDto, TWalletDto, TWalletForm } from '@crab-models'
-import { LoadingSpinner } from '@crab-common-components'
+import { LoadingSpinner, DeleteDialog } from '@crab-common-components'
 
 const styles = StyleSheet.create({
   iconGroup: {
@@ -23,6 +31,7 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
   const { walletDetails } = props
   const [newWallet, setNewWallet] = useState<boolean>(false)
   const [editWallet, setEditWallet] = useState<boolean>(false)
+  const [deleteWallet, setDeleteWallet] = useState<boolean>(false)
   const [newTransaction, setNewTransaction] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [screenLoading, setScreenLoading] = useState<boolean>(false)
@@ -36,6 +45,8 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
 
   const onCloseEditWallet = useCallback(() => setEditWallet(false), [editWallet])
 
+  const onCloseDeleteWallet = useCallback(() => setDeleteWallet(false), [deleteWallet])
+
   const onOpenNewTransaction = useCallback(() => setNewTransaction(true), [newTransaction])
   const onOpenCloseTransaction = useCallback(() => setNewTransaction(false), [newTransaction])
 
@@ -48,14 +59,23 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
     })
   }
 
-  const onEditWallet = (form: TWalletForm) => {
+  const onEditWallet = useCallback((form: TWalletForm) => {
     setLoading(true)
 
     dispatch(updateWalletThunk(form)).then(() => {
       setLoading(false)
       setEditWallet(false)
     })
-  }
+  }, [selectedWallet])
+
+  const onDeleteWallet = useCallback(() => {
+    setLoading(true)
+
+    dispatch(deleteWalletThunk(selectedWallet)).then(() => {
+      setLoading(false)
+      setDeleteWallet(false)
+    })
+  }, [selectedWallet])
 
   const onSelectedWalletForEdit = (walletDto: TWalletDto) => {
     setSelectedWallet(walletDto)
@@ -63,7 +83,8 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
   }
 
   const onSelectedWalletForDelete = (walletDto: TWalletDto) => {
-
+    setSelectedWallet(walletDto)
+    setDeleteWallet(true)
   }
 
   useEffect(() => {
@@ -116,6 +137,14 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
           onClose={onCloseEditWallet}
           loading={loading}
           initialValues={selectedWallet}
+        />
+      </Layout>
+      <Layout>
+        <DeleteDialog
+          open={deleteWallet}
+          onDelete={onDeleteWallet}
+          onClose={onCloseDeleteWallet}
+          loading={loading}
         />
       </Layout>
     </Layout>

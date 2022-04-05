@@ -3,7 +3,7 @@ import { Layout, Text, Card, List, Button, Icon } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
 import { TScreenProps } from '../types'
 import { TWalletDetailsDto, TWalletDto } from '@crab-models'
-import { currencyNumberFormat } from '@crab-utils'
+import { currencyNumberFormat, UNASSIGNED_WALLET } from "@crab-utils";
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -41,23 +41,23 @@ const Wallet: FC<TScreenProps & {
             header={headerProps => (
               <Layout {...headerProps}>
                 <Layout style={styles.main}>
-                  <Text category={'h6'}>
-                    {props.item.name}
-                  </Text>
-                  <Layout style={styles.buttonGroup}>
-                    <Button
-                      onPress={() => onSelectedWalletForEdit({ id: props.item.id, name: props.item.name, createDate: props.item.createDate })}
-                      size={'small'}
-                      appearance={'ghost'}
-                      accessoryLeft={(props) => <Icon {...props} name={'edit-outline'} />}
-                    />
-                    <Button
-                      onPress={() => onSelectedWalletForDelete({ id: props.item.id, name: props.item.name, createDate: props.item.createDate })}
-                      size={'small'}
-                      appearance={'ghost'}
-                      accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}
-                    />
-                  </Layout>
+                  <Text category={'h6'}>{props.item.name}</Text>
+                  {props.item.name === UNASSIGNED_WALLET ? (<Layout></Layout>) : (
+                    <Layout style={styles.buttonGroup}>
+                      <Button
+                        onPress={() => onSelectedWalletForEdit({ id: props.item.id, name: props.item.name, createDate: props.item.createDate })}
+                        size={'small'}
+                        appearance={'ghost'}
+                        accessoryLeft={(props) => <Icon {...props} name={'edit-outline'} />}
+                      />
+                      <Button
+                        onPress={() => onSelectedWalletForDelete({ id: props.item.id, name: props.item.name, createDate: props.item.createDate })}
+                        size={'small'}
+                        appearance={'ghost'}
+                        accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}
+                      />
+                    </Layout>
+                  )}
                 </Layout>
               </Layout>
             )}

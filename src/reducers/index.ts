@@ -19,6 +19,7 @@ import {
   getWalletsDetails,
   createWallet,
   updateWallet,
+  deleteWallet,
   TWalletDetailsAction,
   TWalletDetailsAllState,
   walletDetailsReducer
@@ -129,6 +130,19 @@ export function updateWalletThunk(walletDto: TWalletDto): TThunkResult<Promise<T
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
         const walletsAction = updateWallet(walletDto)
+          .then(success => dispatch(success))
+
+        resolve(walletsAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function deleteWalletThunk(walletDto: TWalletDto): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const walletsAction = deleteWallet(walletDto)
           .then(success => dispatch(success))
 
         resolve(walletsAction)
