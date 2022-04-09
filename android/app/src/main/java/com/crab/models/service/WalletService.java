@@ -58,7 +58,8 @@ public class WalletService {
         WalletEntity originalWalletEntity = walletRepository.getById(objectId);
 
         WalletEntity walletEntity = walletDtoToWalletEntityMapper.walletDtoToWalletEntity(walletDto);
-        walletEntity.setItems(originalWalletEntity.getItems());
+        //walletEntity.setItems(originalWalletEntity.getItems());
+        walletEntity.getItems().addAll(originalWalletEntity.getItems());
 
         walletRepository.upsert(walletEntity);
     }

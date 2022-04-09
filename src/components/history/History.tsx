@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
 })
 
 const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
-  const { yearToDateItems: { value: itemDto }, navigation } = props
-  const historyInfo = useHistory(itemDto)
+  const { yearToDateItems, navigation } = props
+  const historyInfo = useHistory(yearToDateItems)
 
   return (
     <Layout style={{ flex: 1 }}>

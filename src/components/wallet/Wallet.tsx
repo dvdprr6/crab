@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { Layout, Text, Card, List, Button, Icon } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
-import { TScreenProps } from '../types'
+import { TScreenProps, TRANSACTION_SCREEN } from '../types'
 import { TWalletDetailsDto, TWalletDto } from '@crab-models'
-import { currencyNumberFormat, UNASSIGNED_WALLET } from "@crab-utils";
+import { currencyNumberFormat, UNASSIGNED_WALLET } from '@crab-utils'
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -28,7 +28,7 @@ const Wallet: FC<TScreenProps & {
   onSelectedWalletForEdit: (walletDetails: TWalletDto) => void
   onSelectedWalletForDelete: (walletDetails: TWalletDto) => void
 }> = (props) => {
-  const { navigation, route, walletDetails, onSelectedWalletForEdit, onSelectedWalletForDelete } = props
+  const { navigation, walletDetails, onSelectedWalletForEdit, onSelectedWalletForDelete } = props
 
   return(
     <Layout style={{ flex: 1 }}>
@@ -36,7 +36,7 @@ const Wallet: FC<TScreenProps & {
         data={walletDetails}
         renderItem={props => (
           <Card
-            onPress={() => undefined}
+            onPress={() => navigation.navigate(TRANSACTION_SCREEN, { walletId: props.item.id })}
             style={styles.card}
             header={headerProps => (
               <Layout {...headerProps}>

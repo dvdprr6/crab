@@ -2,12 +2,13 @@ import React, { FC } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   TRootStackParamList,
-  SPLASH_SCREEN, MAIN_SCREEN, DASHBOARD_SCREEN, MONTH_SCREEN, WALLET_SCREEN, HISTORY_SCREEN, DETAILS_SCREEN
+  SPLASH_SCREEN, MAIN_SCREEN, DASHBOARD_SCREEN, MONTH_SCREEN, WALLET_SCREEN, TRANSACTION_SCREEN, HISTORY_SCREEN, DETAILS_SCREEN
 } from './types'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { DashboardScreen } from './dashboard'
 import { MonthScreen } from './month'
 import { WalletScreen } from './wallet'
+import { TransactionScreen } from './transactions'
 import { HistoryScreen } from './history'
 import { DetailsScreen } from './details'
 import { SplashScreen } from './splash'
@@ -50,6 +51,7 @@ const Stack = () => {
       <RootSack.Navigator screenOptions={{ headerShown: false }}>
         <RootSack.Screen name={SPLASH_SCREEN} component={SplashScreen} />
         <RootSack.Screen name={MAIN_SCREEN} component={Tabs} options={{ headerShown: false }} />
+        <RootSack.Screen name={TRANSACTION_SCREEN} component={TransactionScreen} />
         <RootSack.Screen name={DETAILS_SCREEN} component={DetailsScreen} />
       </RootSack.Navigator>
     </NavigationContainer>
