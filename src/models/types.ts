@@ -24,13 +24,21 @@ export type TItemDto = {
   recurring: boolean
   type: string
   createDate?: string
-  wallet?: TWalletDetailsDto
+}
+
+export type TWalletItemDto = {
+  name: string
+  amount: boolean
+  wallet: { id: string, name: string }
+  recurring: boolean
+  type: string
 }
 
 /** FORM TYPES */
 
 export type TMonthForm = TItemDto
 export type TWalletForm = TWalletDto
+export type TWalletItemForm = TWalletItemDto
 
 /** SCREENS */
 
@@ -55,10 +63,6 @@ export type TUseMonth = {
   expenses: number
   savings: number
   items: TItemDto[]
-}
-
-export type TUseWallet = {
-
 }
 
 export type TUseHistory = {

@@ -17,7 +17,8 @@ import {
 } from '@crab-reducers'
 import { useDispatch } from 'react-redux'
 import WalletForm from './WalletForm'
-import { TWalletDetailsDto, TWalletDto, TWalletForm } from '@crab-models'
+import WalletItemForm from './WalletItemForm'
+import { TWalletDetailsDto, TWalletDto, TWalletForm, TWalletItemDto } from "@crab-models";
 import { LoadingSpinner, DeleteDialog } from '@crab-common-components'
 
 const styles = StyleSheet.create({
@@ -32,7 +33,7 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
   const [newWallet, setNewWallet] = useState<boolean>(false)
   const [editWallet, setEditWallet] = useState<boolean>(false)
   const [deleteWallet, setDeleteWallet] = useState<boolean>(false)
-  const [newTransaction, setNewTransaction] = useState<boolean>(false)
+  const [newItem, setNewItem] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [screenLoading, setScreenLoading] = useState<boolean>(false)
   const [selectedWallet, setSelectedWallet] = useState<TWalletDto>({} as TWalletDto)
@@ -47,8 +48,8 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
 
   const onCloseDeleteWallet = useCallback(() => setDeleteWallet(false), [deleteWallet])
 
-  const onOpenNewTransaction = useCallback(() => setNewTransaction(true), [newTransaction])
-  const onOpenCloseTransaction = useCallback(() => setNewTransaction(false), [newTransaction])
+  const onOpenNewItem = useCallback(() => setNewItem(true), [newItem])
+  const onCloseNewItem = useCallback(() => setNewItem(false), [newItem])
 
   const onSubmitWallet = (form: TWalletForm) => {
     setLoading(true)
@@ -57,6 +58,10 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
       setLoading(false)
       setNewWallet(false)
     })
+  }
+
+  const onSubmitWalletItem = (form: TWalletItemDto) => {
+
   }
 
   const onEditWallet = useCallback((form: TWalletForm) => {
@@ -103,6 +108,7 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
                 icon={props => <Icon {...props} name={'plus-circle-outline'} />}
               />
               <TopNavigationAction
+                onPress={() => onOpenNewItem()}
                 icon={props => <Icon {...props} name={'plus-square-outline'} />}
               />
             </Layout>
@@ -137,6 +143,15 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
           onClose={onCloseEditWallet}
           loading={loading}
           initialValues={selectedWallet}
+        />
+      </Layout>
+      <Layout>
+        <WalletItemForm
+          open={newItem}
+          wallets={walletDetails.map(item => ({ id: item.id, name: item.name }))}
+          onSubmit={onSubmitWalletItem}
+          onClose={onCloseNewItem}
+          loading={loading}
         />
       </Layout>
       <Layout>

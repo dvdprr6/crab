@@ -1,5 +1,5 @@
-import React, { FC, useCallback } from "react";
-import { CheckBox, Text, RadioGroup, Input } from "@ui-kitten/components";
+import React, { FC, useCallback } from 'react'
+import { CheckBox, Text, RadioGroup, Input } from '@ui-kitten/components'
 import { ChildrenWithProps } from '@ui-kitten/components/devsupport'
 import { RadioProps } from '@ui-kitten/components/ui/radio/radio.component'
 import { KeyboardTypeOptions } from 'react-native'

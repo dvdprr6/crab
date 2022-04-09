@@ -5,10 +5,16 @@ import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { ViewProps, StyleSheet, GestureResponderEvent, Dimensions } from 'react-native'
 import { TextFieldControl } from '@crab-common-components'
-import { TWalletForm } from '@crab-models'
+import { TWalletItemForm } from '@crab-models'
+import { WalletSelectAutoCompleteControl } from './control'
 
 const schema = yup.object().shape({
-  name: yup.string().required('Is Required')
+  name: yup.string().required('Is Required'),
+  amount: yup.number().test(
+    'maxDigitsAfterDecimal',
+    'Number field must have 2 digits after decimal or less',
+    (number) => /^\d+(\.\d{1,2})?$/.test(String(number))
+  )
 })
 
 const styles = StyleSheet.create({
@@ -55,21 +61,15 @@ const Footer: FC<{
   )
 }
 
-const WalletForm: FC<{
-  title: string
+const WalletItemForm: FC<{
   open: boolean
-  onSubmit: (form: TWalletForm) => void
+  wallets: { id: string, name: string }[]
+  onSubmit: (form: TWalletItemForm) => void
   onClose: () => void
   loading: boolean
-  initialValues?: TWalletForm
 }> = (props) => {
-  const { title, open, onSubmit, onClose, loading, initialValues } = props
-  const { control, handleSubmit, reset, setValue } = useForm<TWalletForm>({ resolver: yupResolver(schema) })
-
-  useEffect(() => {
-    setValue('id', initialValues?.id)
-    setValue('createDate', initialValues?.createDate)
-  }, [initialValues])
+  const { open, wallets, onSubmit, onClose, loading } = props
+  const { control, handleSubmit, reset } = useForm<TWalletItemForm>({ resolver: yupResolver(schema) })
 
   useEffect(() => {
     if(!open){
@@ -81,21 +81,48 @@ const WalletForm: FC<{
     <Layout level={'1'}>
       <Modal visible={open} style={styles.container}>
         <Card
-          header={(props) => <Header viewProps={props} title={title} />}
+          header={(props) => <Header viewProps={props} title={'New Item'} />}
           footer={(props) => <Footer loading={loading} handleOnSubmit={handleSubmit(onSubmit)} onClose={onClose} viewProps={props} />}
           disabled
         >
           <Layout style={styles.form}>
             <Controller
               name={'name'}
-              defaultValue={initialValues?.name}
               control={control}
               render={({ field: { value, onChange }, formState: { errors }}) => (
                 <TextFieldControl
                   value={value}
                   onChange={onChange}
-                  placeholder={'Wallet Name'}
+                  placeholder={'Item Name'}
                   label={errors.name?.message}
+                />
+              )}
+            />
+          </Layout>
+          <Layout style={styles.form}>
+            <Controller
+              name={'amount'}
+              control={control}
+              render={({ field: { value, onChange }, formState: { errors }}) => (
+                <TextFieldControl
+                  value={value?.toString()}
+                  onChange={onChange}
+                  placeholder={'Amount ($)'}
+                  keyboardType={'numeric'}
+                  label={errors.amount?.message}
+                />
+              )}
+            />
+          </Layout>
+          <Layout style={styles.form}>
+            <Controller
+              name={'wallet'}
+              control={control}
+              render={({ field: { value, onChange }, formState: { errors }}) => (
+                <WalletSelectAutoCompleteControl
+                  value={value}
+                  wallets={wallets}
+                  onChange={onChange}
                 />
               )}
             />
@@ -106,4 +133,4 @@ const WalletForm: FC<{
   )
 }
 
-export default WalletForm
+export default WalletItemForm
