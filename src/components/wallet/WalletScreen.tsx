@@ -13,12 +13,13 @@ import {
   createWalletThunk,
   getAllWalletsDetailsThunk,
   updateWalletThunk,
+  updateWalletItemThunk,
   deleteWalletThunk,
 } from '@crab-reducers'
 import { useDispatch } from 'react-redux'
 import WalletForm from './WalletForm'
 import WalletItemForm from './WalletItemForm'
-import { TWalletDetailsDto, TWalletDto, TWalletForm, TWalletItemDto } from "@crab-models";
+import { TWalletDto, TWalletForm, TWalletItemDto } from '@crab-models'
 import { LoadingSpinner, DeleteDialog } from '@crab-common-components'
 
 const styles = StyleSheet.create({
@@ -61,7 +62,12 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
   }
 
   const onSubmitWalletItem = (form: TWalletItemDto) => {
+    setLoading(true)
 
+    dispatch(updateWalletItemThunk(form)).then(() => {
+      setLoading(false)
+      setNewItem(false)
+    })
   }
 
   const onEditWallet = useCallback((form: TWalletForm) => {
@@ -148,7 +154,7 @@ const WalletScreen: FC<TPropsFromRedux> = (props) => {
       <Layout>
         <WalletItemForm
           open={newItem}
-          wallets={walletDetails.map(item => ({ id: item.id, name: item.name }))}
+          wallets={walletDetails.map(item => ({ id: item.id, name: item.name, createDate: item.createDate }))}
           onSubmit={onSubmitWalletItem}
           onClose={onCloseNewItem}
           loading={loading}

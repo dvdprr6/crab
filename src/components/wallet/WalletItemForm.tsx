@@ -1,12 +1,13 @@
 import React, { FC, useEffect } from 'react'
-import { Layout, Text, Modal, Button, Card, Spinner } from '@ui-kitten/components'
+import { Layout, Text, Modal, Button, Card, Spinner, Radio } from "@ui-kitten/components";
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { ViewProps, StyleSheet, GestureResponderEvent, Dimensions } from 'react-native'
-import { TextFieldControl } from '@crab-common-components'
-import { TWalletItemForm } from '@crab-models'
+import { CheckBoxControl, RadioGroupControl, TextFieldControl } from "@crab-common-components";
+import { TWalletItemForm, TWalletDto } from '@crab-models'
 import { WalletSelectAutoCompleteControl } from './control'
+import { ITEM_TYPES } from "@crab-utils";
 
 const schema = yup.object().shape({
   name: yup.string().required('Is Required'),
@@ -63,7 +64,7 @@ const Footer: FC<{
 
 const WalletItemForm: FC<{
   open: boolean
-  wallets: { id: string, name: string }[]
+  wallets: TWalletDto[]
   onSubmit: (form: TWalletItemForm) => void
   onClose: () => void
   loading: boolean
@@ -124,6 +125,39 @@ const WalletItemForm: FC<{
                   wallets={wallets}
                   onChange={onChange}
                 />
+              )}
+            />
+          </Layout>
+          <Layout style={styles.form}>
+            <Controller
+              name={'recurring'}
+              defaultValue={false}
+              control={control}
+              render={({ field: { value, onChange }}) => (
+                <CheckBoxControl
+                  value={value}
+                  title={'Recurring'}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </Layout>
+          <Layout style={styles.form}>
+            <Controller
+              name={'type'}
+              defaultValue={ITEM_TYPES[0]}
+              control={control}
+              render={({ field: { value, onChange }}) => (
+                <RadioGroupControl
+                  value={value}
+                  title={'Item Types'}
+                  options={ITEM_TYPES}
+                  onChange={onChange}
+                >
+                  {ITEM_TYPES.map((item, index) => (
+                    <Radio key={index}>{item}</Radio>
+                  ))}
+                </RadioGroupControl>
               )}
             />
           </Layout>
