@@ -21,7 +21,7 @@ public class ItemEntityToItemSchemaMapperTest {
         itemEntity.setName("itemOne");
         itemEntity.setAmount(45.00f);
         itemEntity.setRecurring(false);
-        itemEntity.setType(Constants.ITEM_TYPE_CREDIT);
+        itemEntity.setType(Constants.ITEM_TYPE_EXPENSE);
         itemEntity.setCreateDate(date);
 
         ItemEntityToItemSchemaMapper itemEntityToItemSchemaMapper = Mappers.getMapper(ItemEntityToItemSchemaMapper.class);

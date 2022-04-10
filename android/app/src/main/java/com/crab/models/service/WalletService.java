@@ -2,8 +2,10 @@ package com.crab.models.service;
 
 import com.crab.common.mapper.WalletEntityToWalletDetailsMapper;
 import com.crab.common.mapper.WalletDtoToWalletEntityMapper;
+import com.crab.common.mapper.WalletItemDtoToWalletEntityMapper;
 import com.crab.models.dto.WalletDetailsDto;
 import com.crab.models.dto.WalletDto;
+import com.crab.models.dto.WalletItemDto;
 import com.crab.models.entities.WalletEntity;
 import com.crab.models.repository.WalletRepository;
 import com.crab.utils.Constants;
@@ -58,7 +60,21 @@ public class WalletService {
         WalletEntity originalWalletEntity = walletRepository.getById(objectId);
 
         WalletEntity walletEntity = walletDtoToWalletEntityMapper.walletDtoToWalletEntity(walletDto);
-        //walletEntity.setItems(originalWalletEntity.getItems());
+        walletEntity.getItems().addAll(originalWalletEntity.getItems());
+
+        walletRepository.upsert(walletEntity);
+    }
+
+    public void updateWalletWithItem(ReadableMap readableMap){
+        WalletItemDto walletItemDto = ModelConverter.convertReadableMapToModel(readableMap, WalletItemDto.class);
+        WalletItemDtoToWalletEntityMapper walletItemDtoToWalletEntityMapper = Mappers.getMapper(WalletItemDtoToWalletEntityMapper.class);
+
+        WalletEntity walletEntity = walletItemDtoToWalletEntityMapper.walletItemDtoToWalletEntity(walletItemDto);
+
+        ObjectId objectId = new ObjectId(walletEntity.getId());
+
+        WalletEntity originalWalletEntity = walletRepository.getById(objectId);
+
         walletEntity.getItems().addAll(originalWalletEntity.getItems());
 
         walletRepository.upsert(walletEntity);

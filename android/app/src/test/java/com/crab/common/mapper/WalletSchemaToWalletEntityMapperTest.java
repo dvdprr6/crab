@@ -26,7 +26,7 @@ public class WalletSchemaToWalletEntityMapperTest {
         itemSchemaOne.setName("ItemOne");
         itemSchemaOne.setAmount(45.00f);
         itemSchemaOne.setRecurring(false);
-        itemSchemaOne.setType(Constants.ITEM_TYPE_CREDIT);
+        itemSchemaOne.setType(Constants.ITEM_TYPE_EXPENSE);
         itemSchemaOne.setCreateDate(date);
 
         ItemSchema itemSchemaTwo = new ItemSchema();
@@ -34,7 +34,7 @@ public class WalletSchemaToWalletEntityMapperTest {
         itemSchemaTwo.setName("ItemTwo");
         itemSchemaTwo.setAmount(45.00f);
         itemSchemaTwo.setRecurring(false);
-        itemSchemaTwo.setType(Constants.ITEM_TYPE_DEBIT);
+        itemSchemaTwo.setType(Constants.ITEM_TYPE_REVENUE);
         itemSchemaTwo.setCreateDate(date);
 
         RealmList<ItemSchema> walletSchemaRealmList = new RealmList<>();

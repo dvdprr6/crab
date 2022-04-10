@@ -43,7 +43,7 @@ public abstract class WalletEntityToWalletDetailsMapper{
 
     private Float calculateTotalExpenses(List<ItemEntity> items){
         Float totalExpenses = items.stream()
-                .filter(item -> item.getType().equals(Constants.ITEM_TYPE_CREDIT))
+                .filter(item -> item.getType().equals(Constants.ITEM_TYPE_EXPENSE))
                 .map(item -> item.getAmount())
                 .reduce(0f, (a, b) -> a + b)
                 .floatValue();
@@ -53,7 +53,7 @@ public abstract class WalletEntityToWalletDetailsMapper{
 
     private Float calculateTotalRevenue(List<ItemEntity> items){
         Float totalExpenses = items.stream()
-                .filter(item -> item.getType().equals(Constants.ITEM_TYPE_DEBIT))
+                .filter(item -> item.getType().equals(Constants.ITEM_TYPE_REVENUE))
                 .map(item -> item.getAmount())
                 .reduce(0f, (a, b) -> a + b)
                 .floatValue();

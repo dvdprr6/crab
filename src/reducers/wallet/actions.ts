@@ -7,7 +7,7 @@ import {
 } from './types'
 import { Wallet } from '@crab-modules'
 import { createAction } from '../types'
-import { TWalletDto } from '@crab-models'
+import { TWalletDto, TWalletItemDto } from "@crab-models";
 
 export function getWalletsDetails(): Promise<TWalletDetailsAction>{
   return new Promise<TWalletDetailsAction>(async resolve => {
@@ -26,6 +26,13 @@ export function createWallet(walletDto: TWalletDto): Promise<TWalletDetailsActio
 export function updateWallet(walletDto: TWalletDto): Promise<TWalletDetailsAction>{
   return new Promise<TWalletDetailsAction>(async resolve => {
     const walletDetails = await Wallet.updateWallet(walletDto)
+    resolve(createAction(WALLET_DETAILS_UPDATE_SUCCESS, walletDetails))
+  })
+}
+
+export function updateWalletItem(walletItemDto: TWalletItemDto): Promise<TWalletDetailsAction>{
+  return new Promise<TWalletDetailsAction>(async resolve => {
+    const walletDetails = await Wallet.updateWalletWithItem(walletItemDto)
     resolve(createAction(WALLET_DETAILS_UPDATE_SUCCESS, walletDetails))
   })
 }

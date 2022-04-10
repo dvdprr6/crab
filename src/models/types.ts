@@ -29,7 +29,7 @@ export type TItemDto = {
 export type TWalletItemDto = {
   name: string
   amount: boolean
-  wallet: { id: string, name: string }
+  wallet: TWalletDto
   recurring: boolean
   type: string
 }

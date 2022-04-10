@@ -4,11 +4,11 @@ import { TWalletDto } from '@crab-models'
 
 export const WalletSelectAutoCompleteControl: FC<{
   value: any
-  wallets: { id: string, name: string }[]
-  onChange: (wallet: { id: string, name: string }) => void
+  wallets: TWalletDto[]
+  onChange: (wallet: TWalletDto) => void
 }> = (props) => {
   const { value, wallets, onChange } = props
-  const [data, setData] = useState<{ id: string, name: string }[]>(wallets)
+  const [data, setData] = useState<TWalletDto[]>(wallets)
 
   const onSelect = useCallback((index: number) => {
     const selectedWallet = wallets[index]

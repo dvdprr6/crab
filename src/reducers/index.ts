@@ -20,11 +20,12 @@ import {
   createWallet,
   updateWallet,
   deleteWallet,
+  updateWalletItem,
   TWalletDetailsAction,
   TWalletDetailsAllState,
   walletDetailsReducer
 } from './wallet'
-import { TItemDto, TWalletDto } from '@crab-models'
+import { TItemDto, TWalletDto, TWalletItemDto } from '@crab-models'
 
 const THUNK_TIMEOUT = 1500
 
@@ -130,6 +131,19 @@ export function updateWalletThunk(walletDto: TWalletDto): TThunkResult<Promise<T
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
         const walletsAction = updateWallet(walletDto)
+          .then(success => dispatch(success))
+
+        resolve(walletsAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function updateWalletItemThunk(walletItemDto: TWalletItemDto): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const walletsAction = updateWalletItem(walletItemDto)
           .then(success => dispatch(success))
 
         resolve(walletsAction)
