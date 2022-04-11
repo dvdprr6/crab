@@ -82,27 +82,39 @@ public class WalletService {
 
     public void deleteWallet(ReadableMap readableMap){
         WalletDto walletDto = ModelConverter.convertReadableMapToModel(readableMap, WalletDto.class);
-        WalletDtoToWalletEntityMapper walletDtoToWalletEntityMapper = Mappers.getMapper(WalletDtoToWalletEntityMapper.class);
 
-        WalletEntity walletEntity = walletDtoToWalletEntityMapper.walletDtoToWalletEntity(walletDto);
+        ObjectId objectId = new ObjectId(walletDto.getId());
+
+        WalletEntity walletEntity = walletRepository.getById(objectId);
 
         WalletEntity unassignedWalletEntity = walletRepository.getByName(Constants.UNASSIGNED_WALLET);
 
-        if(unassignedWalletEntity == null){
-            Calendar calendar = Calendar.getInstance();
-            String createDate = calendar.getTime().toString();
+        Calendar calendar = Calendar.getInstance();
+        String createDate = calendar.getTime().toString();
 
+        if(unassignedWalletEntity == null){
             WalletEntity walletEntityNew = new WalletEntity();
             walletEntityNew.setName(Constants.UNASSIGNED_WALLET);
             walletEntityNew.setCreateDate(createDate);
 
-            walletEntity.getItems().stream().forEach(item -> item.setId(null));
+            walletEntity.getItems()
+                    .stream()
+                    .forEach(item -> {
+                        item.setId(null);
+                        item.setCreateDate(createDate);
+                    });
 
             walletEntityNew.getItems().addAll(walletEntity.getItems());
 
             walletRepository.upsert(walletEntityNew);
         }else{
-            walletEntity.getItems().stream().forEach(item -> item.setId(null));
+            walletEntity.getItems()
+                    .stream()
+                    .forEach(item -> {
+                        item.setId(null);
+                        item.setCreateDate(createDate);
+                    });
+            
             unassignedWalletEntity.getItems().addAll(walletEntity.getItems());
 
             walletRepository.upsert(unassignedWalletEntity);
