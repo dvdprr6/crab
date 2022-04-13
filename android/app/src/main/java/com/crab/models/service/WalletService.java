@@ -114,7 +114,7 @@ public class WalletService {
                         item.setId(null);
                         item.setCreateDate(createDate);
                     });
-            
+
             unassignedWalletEntity.getItems().addAll(walletEntity.getItems());
 
             walletRepository.upsert(unassignedWalletEntity);

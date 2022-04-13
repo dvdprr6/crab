@@ -1,4 +1,5 @@
 import { RenderProp } from '@ui-kitten/components/devsupport'
+import { MTD, YTD } from '@crab-utils'
 
 /** DTOs */
 
@@ -40,11 +41,19 @@ export type TMonthForm = TItemDto
 export type TWalletForm = TWalletDto
 export type TWalletItemForm = TWalletItemDto
 
+export type TFilterForm = {
+  filter: typeof MTD | typeof YTD
+}
+
 /** SCREENS */
 
 export type TAppBar = {
   accessoryRight?: RenderProp
   accessoryLeft?: RenderProp
+}
+
+export type TSubBar = {
+  accessoryRight?: RenderProp
 }
 
 export type TUseDashboard = {

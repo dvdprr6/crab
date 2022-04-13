@@ -12,9 +12,9 @@ export function useDashboard(itemDto: TItemDto[]): TUseDashboard{
     topThreeExpense: []
   }
 
-  if(!_.isEmpty(itemDto)){
-    dashboardInfo = calculateDashboardInfo(itemDto)
-  }
+  // if(!_.isEmpty(itemDto)){
+  //   dashboardInfo = calculateDashboardInfo(itemDto)
+  // }
 
   return dashboardInfo
 }

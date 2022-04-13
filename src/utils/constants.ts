@@ -9,3 +9,6 @@ export const RED_STATUS = 'Red'
 
 export const UNASSIGNED_WALLET = 'UNASSIGNED'
 
+export const MTD = 'MTD'
+export const YTD = 'YTD'
+

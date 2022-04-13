@@ -5,10 +5,10 @@ import {
   getMonthToDateItems,
   upsertItemAndGetMonthToDateItems,
   deleteItemAndGetMonthToDateItems,
-  monthToDateAllReducer,
-  TMonthToDateAction,
-  TMonthToDateAllState
-} from './mtd'
+  itemsAllReducer,
+  TItemsAction,
+  TItemsAllState
+} from './items'
 import {
   getYearToDateItems,
   yearToDateAllReducer,
@@ -29,14 +29,13 @@ import { TItemDto, TWalletDto, TWalletItemDto } from '@crab-models'
 
 const THUNK_TIMEOUT = 1500
 
-type TActions = TMonthToDateAction | TYearToDateAction | TWalletDetailsAction
-type TStates = TMonthToDateAllState | TYearToDateAllState | TWalletDetailsAllState
+type TActions = TItemsAction | TYearToDateAction | TWalletDetailsAction
+type TStates = TItemsAllState | TYearToDateAllState | TWalletDetailsAllState
 
 type TThunkResult<R> = ThunkAction<R, TStates, undefined, TActions>
 
 const rootReducers = combineReducers({
-  monthToDateItems: monthToDateAllReducer,
-  yearToDateItems: yearToDateAllReducer,
+  itemsAll: itemsAllReducer,
   walletDetails: walletDetailsReducer
 })
 
@@ -46,8 +45,7 @@ export type TAppDispatch = typeof store.dispatch
 
 const mapStateToProps = (state: TRootState) => ({
   /** ITEM STATES */
-  monthToDateItems: state.monthToDateItems.payload,
-  yearToDateItems: state.yearToDateItems.payload,
+  itemsAll: state.itemsAll.payload,
 
   /** WALLET STATES */
   walletDetails: state.walletDetails.payload

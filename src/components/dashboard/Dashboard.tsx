@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
 })
 
 const Dashboard: FC<TScreenProps & TPropsFromRedux> = (props) => {
-  const { yearToDateItems: { value: itemDto }, navigation } = props
-  const { status, revenue, expenses, savings, chartData, topThreeExpense } = useDashboard(itemDto)
+  const { itemsAll, navigation } = props
+  const { status, revenue, expenses, savings, chartData, topThreeExpense } = useDashboard(itemsAll)
 
   useEffect(() => {
     navigation.addListener('beforeRemove', e => {
@@ -134,7 +134,7 @@ const Dashboard: FC<TScreenProps & TPropsFromRedux> = (props) => {
               >
                 <Layout style={styles.highestItem}>
                   <Text>Item Name</Text>
-                  <Text>{props.item.itemName}</Text>
+                  <Text>{props.item.name}</Text>
                 </Layout>
                 <Layout style={styles.highestItem}>
                   <Text>Amount</Text>
@@ -146,7 +146,7 @@ const Dashboard: FC<TScreenProps & TPropsFromRedux> = (props) => {
                 </Layout>
                 <Layout style={styles.highestItem}>
                   <Text>Type</Text>
-                  <Text>{props.item.itemType}</Text>
+                  <Text>{props.item.type}</Text>
                 </Layout>
                 <Layout style={styles.highestItem}>
                   <Text>Is Re-occurring?</Text>

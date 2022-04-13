@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
 import { Icon, TopNavigation, TopNavigationAction } from '@ui-kitten/components'
 import { TScreenProps } from '../types'
+import { TSubBar } from '@crab-models'
 
-const SubBar: FC<TScreenProps> = (props) => {
-  const { navigation } = props
+const SubBar: FC<TScreenProps & TSubBar> = (props) => {
+  const { navigation, accessoryRight } = props
 
   return(
     <TopNavigation
@@ -13,6 +14,7 @@ const SubBar: FC<TScreenProps> = (props) => {
           icon={props => <Icon {...props}  name={'arrow-back'} />}
         />
       )}
+      accessoryRight={accessoryRight}
     />
   )
 }
