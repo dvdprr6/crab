@@ -45,9 +45,9 @@ public class WalletEntityToWalletDetailsDtoMapperTest {
         walletEntity.setCreateDate(date);
         walletEntity.setItems(Arrays.asList(itemEntityOne, itemEntityTwo));
 
-        WalletEntityToWalletDetailsMapper walletEntityToWalletDetailsMapper = Mappers.getMapper(WalletEntityToWalletDetailsMapper.class);
+        WalletEntityToWalletDetailsDtoMapper walletEntityToWalletDetailsDtoMapper = Mappers.getMapper(WalletEntityToWalletDetailsDtoMapper.class);
 
-        WalletDetailsDto walletDetailsDto = walletEntityToWalletDetailsMapper.walletEntityToWalletDetailsDto(walletEntity);
+        WalletDetailsDto walletDetailsDto = walletEntityToWalletDetailsDtoMapper.walletEntityToWalletDetailsDto(walletEntity);
 
         assert(walletDetailsDto != null);
     }

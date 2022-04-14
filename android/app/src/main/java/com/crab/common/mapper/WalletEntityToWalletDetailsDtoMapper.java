@@ -12,7 +12,7 @@ import org.mapstruct.Named;
 import java.util.List;
 
 @Mapper
-public abstract class WalletEntityToWalletDetailsMapper{
+public abstract class WalletEntityToWalletDetailsDtoMapper {
 
     @Mapping(source = "items", target = "totalExpense", qualifiedByName = { "getTotalExpenses" })
     @Mapping(source = "items", target = "totalRevenue", qualifiedByName = { "getTotalRevenue" })

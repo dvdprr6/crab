@@ -1,6 +1,6 @@
 package com.crab.models.service;
 
-import com.crab.common.mapper.WalletEntityToWalletDetailsMapper;
+import com.crab.common.mapper.WalletEntityToWalletDetailsDtoMapper;
 import com.crab.common.mapper.WalletDtoToWalletEntityMapper;
 import com.crab.common.mapper.WalletItemDtoToWalletEntityMapper;
 import com.crab.models.dto.WalletDetailsDto;
@@ -30,7 +30,7 @@ public class WalletService {
     public WritableArray getAllWallets(){
         List<WalletEntity> walletEntityList = walletRepository.getAll();
 
-        WalletEntityToWalletDetailsMapper walletEntityToWalletDtoMapper = Mappers.getMapper(WalletEntityToWalletDetailsMapper.class);
+        WalletEntityToWalletDetailsDtoMapper walletEntityToWalletDtoMapper = Mappers.getMapper(WalletEntityToWalletDetailsDtoMapper.class);
 
         List<WalletDetailsDto> walletDetailsDtoList = walletEntityList.stream()
                 .map(item -> walletEntityToWalletDtoMapper.walletEntityToWalletDetailsDto(item))
