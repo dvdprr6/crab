@@ -8,7 +8,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
 
 public class ItemModule extends ReactContextBaseJavaModule {
     private ItemService itemService;
@@ -25,15 +25,15 @@ public class ItemModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getMonthToDateItems(Promise promise){
-        WritableArray writableArray = itemService.monthToDateItems();
-        promise.resolve(writableArray);
+    public void getMonthToDateItemsById(String id, Promise promise){
+        WritableMap writableMap = itemService.monthToDateItems(id);
+        promise.resolve(writableMap);
     }
 
     @ReactMethod
-    public void getYearToDateItems(Promise promise){
-        WritableArray writableArray = itemService.yearToDateItems();
-        promise.resolve(writableArray);
+    public void getYearToDateItemsById(String id, Promise promise){
+        WritableMap writableMap = itemService.yearToDateItems(id);
+        promise.resolve(writableMap);
     }
 
     @ReactMethod

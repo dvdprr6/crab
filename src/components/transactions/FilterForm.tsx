@@ -45,7 +45,7 @@ const Footer: FC<{
       <Button disabled={loading} appearance={'ghost'} onPress={() => onClose()}>
         Cancel
       </Button>
-      <Button disabled={loading} appearance={'ghost'} accessoryLeft={() => loading ? <Spinner size={'tiny'} /> : <></>} onPress={handleOnSubmit}>Save</Button>
+      <Button disabled={loading} appearance={'ghost'} accessoryLeft={() => loading ? <Spinner size={'tiny'} /> : <></>} onPress={handleOnSubmit}>Submit</Button>
     </Layout>
   )
 }

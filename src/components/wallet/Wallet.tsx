@@ -34,24 +34,24 @@ const Wallet: FC<TScreenProps & {
     <Layout style={{ flex: 1 }}>
       <List
         data={walletDetails}
-        renderItem={props => (
+        renderItem={value => (
           <Card
-            onPress={() => navigation.navigate(TRANSACTION_SCREEN, { walletId: props.item.id })}
+            onPress={() => navigation.navigate(TRANSACTION_SCREEN, { walletId: value.item.id })}
             style={styles.card}
             header={headerProps => (
               <Layout {...headerProps}>
                 <Layout style={styles.main}>
-                  <Text category={'h6'}>{props.item.name}</Text>
-                  {props.item.name === UNASSIGNED_WALLET ? (<Layout></Layout>) : (
+                  <Text category={'h6'}>{value.item.name}</Text>
+                  {value.item.name === UNASSIGNED_WALLET ? (<Layout></Layout>) : (
                     <Layout style={styles.buttonGroup}>
                       <Button
-                        onPress={() => onSelectedWalletForEdit({ id: props.item.id, name: props.item.name, createDate: props.item.createDate })}
+                        onPress={() => onSelectedWalletForEdit({ id: value.item.id, name: value.item.name, createDate: value.item.createDate })}
                         size={'small'}
                         appearance={'ghost'}
                         accessoryLeft={(props) => <Icon {...props} name={'edit-outline'} />}
                       />
                       <Button
-                        onPress={() => onSelectedWalletForDelete({ id: props.item.id, name: props.item.name, createDate: props.item.createDate })}
+                        onPress={() => onSelectedWalletForDelete({ id: value.item.id, name: value.item.name, createDate: value.item.createDate })}
                         size={'small'}
                         appearance={'ghost'}
                         accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}
@@ -64,15 +64,15 @@ const Wallet: FC<TScreenProps & {
           >
             <Layout style={styles.main}>
               <Text>Total Revenue</Text>
-              <Text>{currencyNumberFormat(props.item.totalRevenue)}</Text>
+              <Text>{currencyNumberFormat(value.item.totalRevenue)}</Text>
             </Layout>
             <Layout style={styles.main}>
               <Text>Total Expenses</Text>
-              <Text>{currencyNumberFormat(props.item.totalExpense)}</Text>
+              <Text>{currencyNumberFormat(value.item.totalExpense)}</Text>
             </Layout>
             <Layout style={styles.main}>
               <Text>Total Savings</Text>
-              <Text>{currencyNumberFormat(props.item.totalSavings)}</Text>
+              <Text>{currencyNumberFormat(value.item.totalSavings)}</Text>
             </Layout>
           </Card>
         )}

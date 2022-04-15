@@ -8,6 +8,7 @@ import com.crab.db.RealmDb;
 import com.crab.models.entities.ItemEntity;
 import com.crab.models.schema.ItemSchema;
 
+import org.bson.types.ObjectId;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Date;
@@ -19,7 +20,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ItemRepository {
-    public List<ItemEntity> getItemsByDateRange(Date fromDate, Date toDate){
+    public List<ItemEntity> getItemsByDateRange(ObjectId objectId, Date fromDate, Date toDate){
         RealmConfiguration realmConfiguration = RealmDb.getInstance().getRealmConfiguration();
         Realm realm = Realm.getInstance(realmConfiguration);
 
@@ -28,6 +29,7 @@ public class ItemRepository {
         try{
             List<ItemSchema> itemSchemaList = realm
                     .where(ItemSchema.class)
+                    .equalTo("wallet._id", objectId)
                     .between("create_date", fromDate, toDate)
                     .findAll()
                     .stream()

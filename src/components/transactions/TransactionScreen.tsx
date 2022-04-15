@@ -1,25 +1,41 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { TScreenNavigationProps, TScreenProps, TScreenRouteProps } from '../types'
-import { TPropsFromRedux, connector } from '@crab-reducers'
+import { TPropsFromRedux, connector, TAppDispatch, getMonthToDateItemsByIdThunk, getYearToDateItemsByIdThunk } from '@crab-reducers'
 import { LoadingSpinner, SubBar } from '@crab-common-components'
-import { Layout, Text, TopNavigationAction, Icon } from '@ui-kitten/components'
+import { Layout, TopNavigationAction, Icon } from '@ui-kitten/components'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import Transactions from './Transactions'
 import FilterForm from './FilterForm'
+import { TFilterForm } from '@crab-models'
+import { MTD } from '@crab-utils'
+import { useDispatch } from 'react-redux'
 
 const TransactionScreen: FC<TPropsFromRedux & TScreenProps> = (props) => {
-  const { route, itemsAll } = props
-  const [screenLoading, setScreenLoading] = useState<boolean>(false)
+  const { route, itemDetails } = props
   const [filter, setFilter] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const navigation = useNavigation<TScreenNavigationProps>()
   const xroute = useRoute<TScreenRouteProps>()
+  const dispatch: TAppDispatch = useDispatch()
 
   const onOpenFilter = useCallback(() => setFilter(true), [filter])
   const onCloseFilter = useCallback(() => setFilter(false), [filter])
 
-  const onSubmit = (form: any) => {
-
+  const onSubmitFilter = (form: TFilterForm) => {
+    setLoading(true)
+    if(form.filter === MTD){
+      //@ts-ignore
+      dispatch(getMonthToDateItemsByIdThunk(route.params?.walletId)).then(() => {
+        setLoading(false)
+        setFilter(false)
+      })
+    }else{
+      //@ts-ignore
+      dispatch(getYearToDateItemsByIdThunk(route.params?.walletId)).then(() => {
+        setLoading(false)
+        setFilter(false)
+      })
+    }
   }
 
   return(
@@ -35,16 +51,12 @@ const TransactionScreen: FC<TPropsFromRedux & TScreenProps> = (props) => {
             />
           )}
         />
-        {screenLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <Transactions items={itemsAll}/>
-        )}
+          <Transactions itemsDetails={itemDetails}/>
       </Layout>
       <Layout>
         <FilterForm
           open={filter}
-          onSubmit={onSubmit}
+          onSubmit={onSubmitFilter}
           onClose={onCloseFilter}
           loading={loading}
         />

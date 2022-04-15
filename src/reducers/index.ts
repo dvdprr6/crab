@@ -2,19 +2,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { connect, ConnectedProps } from 'react-redux'
 import thunk, { ThunkAction, ThunkMiddleware } from 'redux-thunk'
 import {
-  getMonthToDateItems,
+  getMonthToDateItemsById,
+  getYearToDateItemsById,
   upsertItemAndGetMonthToDateItems,
   deleteItemAndGetMonthToDateItems,
-  itemsAllReducer,
+  itemDetailsReducer,
   TItemsAction,
   TItemsAllState
 } from './items'
-import {
-  getYearToDateItems,
-  yearToDateAllReducer,
-  TYearToDateAction,
-  TYearToDateAllState
-} from './ytd'
 import {
   getWalletsDetails,
   createWallet,
@@ -29,13 +24,13 @@ import { TItemDto, TWalletDto, TWalletItemDto } from '@crab-models'
 
 const THUNK_TIMEOUT = 1500
 
-type TActions = TItemsAction | TYearToDateAction | TWalletDetailsAction
-type TStates = TItemsAllState | TYearToDateAllState | TWalletDetailsAllState
+type TActions = TItemsAction | TWalletDetailsAction
+type TStates = TItemsAllState | TWalletDetailsAllState
 
 type TThunkResult<R> = ThunkAction<R, TStates, undefined, TActions>
 
 const rootReducers = combineReducers({
-  itemsAll: itemsAllReducer,
+  itemDetails: itemDetailsReducer,
   walletDetails: walletDetailsReducer
 })
 
@@ -45,7 +40,7 @@ export type TAppDispatch = typeof store.dispatch
 
 const mapStateToProps = (state: TRootState) => ({
   /** ITEM STATES */
-  itemsAll: state.itemsAll.payload,
+  itemDetails: state.itemDetails.payload,
 
   /** WALLET STATES */
   walletDetails: state.walletDetails.payload
@@ -56,27 +51,53 @@ export type TPropsFromRedux = ConnectedProps<typeof connector>
 
 /** MIDDLEWARE */
 
-export function splashThunk(): TThunkResult<Promise<TActions>>{
+// export function splashThunk(): TThunkResult<Promise<TActions>>{
+//   return async (dispatch) => {
+//     return new Promise<TActions>(resolve => {
+//       setTimeout(() => {
+//         const splashAction = getMonthToDateItems()
+//           .then(success => dispatch(success))
+//           .then(() => getYearToDateItems().then(success => dispatch(success)))
+//
+//         resolve(splashAction)
+//       }, THUNK_TIMEOUT)
+//     })
+//   }
+// }
+
+export function getMonthToDateItemsByIdThunk(id: string): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
-        const splashAction = getMonthToDateItems()
+        const itemsAction = getMonthToDateItemsById(id)
           .then(success => dispatch(success))
-          .then(() => getYearToDateItems().then(success => dispatch(success)))
 
-        resolve(splashAction)
+        resolve(itemsAction)
       }, THUNK_TIMEOUT)
     })
   }
 }
 
-export function upsertMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<TActions>>{
+export function getYearToDateItemsByIdThunk(id: string): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const itemsAction = getYearToDateItemsById(id)
+          .then(success => dispatch(success))
+
+        resolve(itemsAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function upsertMonthToDateByIdThunk(itemDto: TItemDto): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
         const monthToDateAction = upsertItemAndGetMonthToDateItems(itemDto)
           .then(success => dispatch(success))
-          .then(() => getYearToDateItems().then(success => dispatch(success)))
+          //.then(() => getYearToDateItems().then(success => dispatch(success)))
 
         resolve(monthToDateAction)
       }, THUNK_TIMEOUT)
@@ -90,7 +111,7 @@ export function deleteMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<
       setTimeout(() => {
         const monthToDateAction = deleteItemAndGetMonthToDateItems(itemDto)
           .then(success => dispatch(success))
-          .then(() => getYearToDateItems().then(success => dispatch(success)))
+          //.then(() => getYearToDateItems().then(success => dispatch(success)))
 
         resolve(monthToDateAction)
       }, THUNK_TIMEOUT)

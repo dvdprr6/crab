@@ -1,12 +1,12 @@
 import { TAction, TState } from '../types'
-import { TItemDto } from '@crab-models'
+import { TItemDetailsDto } from '@crab-models'
 
 export const MONTH_TO_DATE_GET_SUCCESS = 'MONTH_TO_DATE_GET_SUCCESS'
 export const YEAR_TO_DATE_GET_SUCCESS = 'YEAR_TO_DATE_GET_SUCCESS'
 
-type TMonthToDateGetSuccess = TAction<typeof MONTH_TO_DATE_GET_SUCCESS, TItemDto[]>
-type TYearToDateGetSuccess = TAction<typeof YEAR_TO_DATE_GET_SUCCESS, TItemDto[]>
+type TMonthToDateGetSuccess = TAction<typeof MONTH_TO_DATE_GET_SUCCESS, TItemDetailsDto>
+type TYearToDateGetSuccess = TAction<typeof YEAR_TO_DATE_GET_SUCCESS, TItemDetailsDto>
 
 export type TItemsAction = TMonthToDateGetSuccess | TYearToDateGetSuccess
 
-export type TItemsAllState = TState<TItemDto[]>
+export type TItemsAllState = TState<TItemDetailsDto>

@@ -18,6 +18,14 @@ export type TWalletDetailsDto = {
   createDate: string
 }
 
+export type TItemDetailsDto = {
+  status: string
+  totalExpense: number
+  totalRevenue: number
+  totalSavings: number
+  items: TItemDto[]
+}
+
 export type TItemDto = {
   id?: string
   name: string

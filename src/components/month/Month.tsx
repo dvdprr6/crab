@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 import { TItemDto } from '@crab-models'
 import { EXPENSE } from '@crab-utils'
 import moment from 'moment'
-import { TPropsFromRedux, connector, TAppDispatch, upsertMonthToDateThunk, deleteMonthToDateThunk } from '@crab-reducers'
+import { TPropsFromRedux, connector, TAppDispatch, upsertMonthToDateByIdThunk, deleteMonthToDateThunk } from '@crab-reducers'
 import { useMonth } from './hooks'
 import { useDispatch } from 'react-redux'
 import MonthForm from './MonthForm'
@@ -69,12 +69,12 @@ const Month: FC<TPropsFromRedux> = (props) => {
 
   const onSubmit = (form: TItemDto) => {
     setLoading(true)
-    dispatch(upsertMonthToDateThunk(form)).then(() => setLoading(false))
+    dispatch(upsertMonthToDateByIdThunk(form)).then(() => setLoading(false))
   }
 
   const onEdit = (form: TItemDto) => {
     setLoading(true)
-    dispatch(upsertMonthToDateThunk(form)).then(() => setLoading(false))
+    dispatch(upsertMonthToDateByIdThunk(form)).then(() => setLoading(false))
   }
 
   const onDelete = () => {

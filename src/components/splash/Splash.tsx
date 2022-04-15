@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import { TScreenProps, MAIN_SCREEN } from '../types'
-import { TAppDispatch, splashThunk } from '@crab-reducers'
+import { TAppDispatch } from '@crab-reducers'
 import { useDispatch } from 'react-redux'
 import { StyleSheet } from 'react-native'
 import { Layout, Text, Spinner } from '@ui-kitten/components'
@@ -21,7 +21,8 @@ const Splash: FC<TScreenProps> = (props) => {
   const dispatch: TAppDispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(splashThunk()).then(() => navigation.navigate(MAIN_SCREEN))
+    //dispatch(splashThunk()).then(() => navigation.navigate(MAIN_SCREEN))
+    navigation.navigate(MAIN_SCREEN)
   }, [])
 
   return(
