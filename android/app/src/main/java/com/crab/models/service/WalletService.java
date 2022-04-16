@@ -6,6 +6,7 @@ import com.crab.common.mapper.WalletItemDtoToWalletEntityMapper;
 import com.crab.models.dto.WalletDetailsDto;
 import com.crab.models.dto.WalletDto;
 import com.crab.models.dto.WalletItemDto;
+import com.crab.models.entities.ItemEntity;
 import com.crab.models.entities.WalletEntity;
 import com.crab.models.repository.WalletRepository;
 import com.crab.utils.Constants;
@@ -16,6 +17,7 @@ import com.facebook.react.bridge.WritableArray;
 import org.bson.types.ObjectId;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,7 +77,11 @@ public class WalletService {
 
         WalletEntity originalWalletEntity = walletRepository.getById(objectId);
 
-        walletEntity.getItems().addAll(originalWalletEntity.getItems());
+        List<ItemEntity> itemsList = new ArrayList<>(walletEntity.getItems());
+
+        originalWalletEntity.getItems().stream().forEach(item -> itemsList.add(item));
+
+        walletEntity.setItems(itemsList);
 
         walletRepository.upsert(walletEntity);
     }

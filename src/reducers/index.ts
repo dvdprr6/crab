@@ -6,6 +6,7 @@ import {
   getYearToDateItemsById,
   upsertItemAndGetMonthToDateItems,
   deleteItemAndGetMonthToDateItems,
+  resetItems,
   itemDetailsReducer,
   TItemsAction,
   TItemsAllState
@@ -87,6 +88,17 @@ export function getYearToDateItemsByIdThunk(id: string): TThunkResult<Promise<TA
 
         resolve(itemsAction)
       }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function resetItemsThunk(): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      const itemsAction = resetItems()
+        .then(success => dispatch(success))
+
+      resolve(itemsAction)
     })
   }
 }

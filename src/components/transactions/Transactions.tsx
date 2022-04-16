@@ -27,11 +27,51 @@ const styles = StyleSheet.create({
   }
 })
 
-const Transactions: FC<{ itemsDetails: TItemDetailsDto}> = (props) => {
+const Transactions: FC<{ itemsDetails: TItemDetailsDto }> = (props) => {
   const { itemsDetails } = props
 
   return(
     <Layout style={{ flex: 1 }}>
+      <Layout>
+        <List
+          contentContainerStyle={styles.listContainer}
+          data={[0]}
+          renderItem={() => (
+            <Layout>
+              <Card style={styles.card} disabled>
+                <Layout style={styles.status}>
+                  <Text>Status</Text>
+                  <Text>{itemsDetails.status}</Text>
+                </Layout>
+              </Card>
+            </Layout>
+          )}
+        />
+      </Layout>
+      <Layout>
+        <List
+          contentContainerStyle={styles.listContainer}
+          data={[0]}
+          renderItem={() => (
+            <Layout>
+              <Card  style={styles.card} disabled>
+                <Layout style={styles.main}>
+                  <Text>Total Revenue</Text>
+                  <Text>{currencyNumberFormat(itemsDetails.totalRevenue)}</Text>
+                </Layout>
+                <Layout style={styles.main}>
+                  <Text>Total Expenses</Text>
+                  <Text>{currencyNumberFormat(itemsDetails.totalExpense)}</Text>
+                </Layout>
+                <Layout style={styles.main}>
+                  <Text>Total Savings</Text>
+                  <Text>{currencyNumberFormat(itemsDetails.totalSavings)}</Text>
+                </Layout>
+              </Card>
+            </Layout>
+          )}
+        />
+      </Layout>
       <Layout style={{ flex: 1 }}>
         <List
           data={itemsDetails.items}

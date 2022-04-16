@@ -63,7 +63,7 @@ public class ItemService {
 
         ItemDetailsDto itemDetailsDto = calculateItemDetailsDto(itemDtoList);
 
-        WritableMap writableMap = ModelConverter.convertModelToWritableMap(itemDtoList);
+        WritableMap writableMap = ModelConverter.convertModelToWritableMap(itemDetailsDto);
 
         return writableMap;
     }

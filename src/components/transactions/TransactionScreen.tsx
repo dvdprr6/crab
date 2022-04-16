@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useState, useEffect } from 'react'
 import { TScreenNavigationProps, TScreenProps, TScreenRouteProps } from '../types'
-import { TPropsFromRedux, connector, TAppDispatch, getMonthToDateItemsByIdThunk, getYearToDateItemsByIdThunk } from '@crab-reducers'
-import { LoadingSpinner, SubBar } from '@crab-common-components'
+import { TPropsFromRedux, connector, TAppDispatch, getMonthToDateItemsByIdThunk, getYearToDateItemsByIdThunk, resetItemsThunk } from '@crab-reducers'
+import { SubBar } from '@crab-common-components'
 import { Layout, TopNavigationAction, Icon } from '@ui-kitten/components'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import Transactions from './Transactions'
@@ -37,6 +37,10 @@ const TransactionScreen: FC<TPropsFromRedux & TScreenProps> = (props) => {
       })
     }
   }
+
+  useEffect(() => {
+    dispatch(resetItemsThunk()).then()
+  }, [])
 
   return(
     <Layout style={{ flex: 1 }}>

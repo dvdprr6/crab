@@ -1,4 +1,4 @@
-import { MONTH_TO_DATE_GET_SUCCESS, YEAR_TO_DATE_GET_SUCCESS, TItemsAction } from './types'
+import { MONTH_TO_DATE_GET_SUCCESS, YEAR_TO_DATE_GET_SUCCESS, RESET_ITEMS, TItemsAction } from './types'
 import { Item } from '@crab-modules'
 import { createAction } from '../types'
 import { TItemDto } from '@crab-models'
@@ -16,6 +16,12 @@ export function getYearToDateItemsById(id: string): Promise<TItemsAction>{
     const itemDetails = await Item.getYearToDateItemsById(id)
 
     resolve(createAction(YEAR_TO_DATE_GET_SUCCESS, itemDetails))
+  })
+}
+
+export function resetItems(): Promise<TItemsAction>{
+  return new Promise<TItemsAction>(resolve => {
+    resolve(createAction(RESET_ITEMS, undefined))
   })
 }
 
