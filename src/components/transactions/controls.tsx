@@ -18,7 +18,7 @@ export const FilterDateRangeControl: FC<{
 
   return(
     <RadioGroup
-      selectedIndex={value === MTD ? 1 : 0}
+      selectedIndex={value === MTD ? 0 : 1}
       onChange={index => onSelect(index)}
     >
       <Radio>Month To Date</Radio>

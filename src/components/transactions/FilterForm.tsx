@@ -80,7 +80,7 @@ const FilterForm: FC<{
               control={control}
               render={({ field: { value, onChange }}) => (
                 <FilterDateRangeControl
-                  value={value === MTD ? 0 : 1}
+                  value={value}
                   onChange={onChange}
                 />
               )}
