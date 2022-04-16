@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Text, List, Card, Layout } from '@ui-kitten/components'
 import { StyleSheet, Dimensions } from 'react-native'
 import { PieChart } from 'react-native-chart-kit'
-import { TScreenProps, DETAILS_SCREEN } from '../types'
+import { TScreenProps } from '../types'
 import { TPropsFromRedux, connector } from '@crab-reducers'
 import { useHistory } from './hooks'
 
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
 })
 
 const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
-  const { yearToDateItems, navigation } = props
-  const historyInfo = useHistory(yearToDateItems)
+  const { itemDetails, navigation } = props
+  const historyInfo = useHistory(itemDetails.items)
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -38,14 +38,6 @@ const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
         data={historyInfo}
         renderItem={props => (
           <Card
-            onPress={() => navigation.navigate(DETAILS_SCREEN, {
-              status: props.item.status,
-              revenue: props.item.revenue,
-              expenses: props.item.expenses,
-              savings: props.item.savings,
-              chartData: props.item.chartData,
-              items: props.item.items
-            })}
             style={styles.item}
             header={headerProps => (
               <Layout {...headerProps}>

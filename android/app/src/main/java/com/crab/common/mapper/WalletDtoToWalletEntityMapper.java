@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 import java.util.ArrayList;
 
-//@Mapper(uses = ItemDtoToItemEntityMapper.class)
 @Mapper
 public abstract class WalletDtoToWalletEntityMapper{
     public abstract WalletEntity walletDtoToWalletEntity(WalletDto walletDto);

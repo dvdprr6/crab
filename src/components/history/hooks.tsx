@@ -25,8 +25,8 @@ function calculateHistoryInfo(itemDto: TItemDto[]): TUseHistory[] {
 
     const month = item
 
-    const revenueItems = sortedItemDescending.filter(x => x.itemType === REVENUE).map(x => x.amount)
-    const expenseItems = sortedItemDescending.filter(x => x.itemType === EXPENSE).map(x => x.amount)
+    const revenueItems = sortedItemDescending.filter(x => x.type === REVENUE).map(x => x.amount)
+    const expenseItems = sortedItemDescending.filter(x => x.type === EXPENSE).map(x => x.amount)
 
     const revenue = _.sum(revenueItems)
     const expenses = _.sum(expenseItems)
