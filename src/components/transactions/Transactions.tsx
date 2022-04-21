@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Layout, Text, Card, List, Button, Icon } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
-import { TItemDetailsDto} from '@crab-models'
+import { TItemDetailsDto, TItemDto } from '@crab-models'
 import { currencyNumberFormat, EXPENSE } from '@crab-utils'
 import moment from 'moment'
 
@@ -27,8 +27,12 @@ const styles = StyleSheet.create({
   }
 })
 
-const Transactions: FC<{ itemsDetails: TItemDetailsDto }> = (props) => {
-  const { itemsDetails } = props
+const Transactions: FC<{
+  itemsDetails: TItemDetailsDto
+  onSelectedItemForDelete: (itemDto: TItemDto) => void
+  onSelectedItemForEdit: (itemDto: TItemDto) => void
+}> = (props) => {
+  const { itemsDetails, onSelectedItemForDelete, onSelectedItemForEdit } = props
 
   return(
     <Layout style={{ flex: 1 }}>
@@ -78,14 +82,14 @@ const Transactions: FC<{ itemsDetails: TItemDetailsDto }> = (props) => {
           renderItem={renderItemProps => (
             <Layout>
               <Card
-                disabled
+                onPress={() => onSelectedItemForEdit(renderItemProps.item)}
                 key={renderItemProps.item.id}
                 style={styles.card}
                 status={renderItemProps.item.type === EXPENSE ? 'danger' : 'success'}
                 header={headerProps => (
                   <Layout {...headerProps} style={styles.button}>
                     <Button
-                      onPress={() => undefined}
+                      onPress={() => onSelectedItemForDelete(renderItemProps.item)}
                       size={'small'}
                       appearance={'ghost'}
                       accessoryLeft={(props) => <Icon {...props} name={'trash-2-outline'} />}

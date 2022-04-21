@@ -117,7 +117,7 @@ public class ItemService {
     }
 
     private String calculateLeverageStatus(Float revenue, Float expense){
-        Float debtRatio = expense / revenue;
+        float debtRatio = expense / revenue;
 
         if(debtRatio <= 0.7){
             return Constants.GREEN_STATUS;

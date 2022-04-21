@@ -25,14 +25,14 @@ public class ItemModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getMonthToDateItemsById(String id, Promise promise){
-        WritableMap writableMap = itemService.monthToDateItems(id);
+    public void getMonthToDateItemsById(String walletId, Promise promise){
+        WritableMap writableMap = itemService.monthToDateItems(walletId);
         promise.resolve(writableMap);
     }
 
     @ReactMethod
-    public void getYearToDateItemsById(String id, Promise promise){
-        WritableMap writableMap = itemService.yearToDateItems(id);
+    public void getYearToDateItemsById(String walletId, Promise promise){
+        WritableMap writableMap = itemService.yearToDateItems(walletId);
         promise.resolve(writableMap);
     }
 

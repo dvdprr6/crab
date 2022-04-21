@@ -1,4 +1,6 @@
 import {
+  ITEM_DELETE_SUCCESS,
+  ITEM_UPDATE_SUCCESS,
   MONTH_TO_DATE_GET_SUCCESS,
   RESET_ITEMS,
   TItemsAction,
@@ -20,6 +22,8 @@ export function itemDetailsReducer(state = INITIAL_ALL_STATE, action: TItemsActi
   switch(action.type){
     case MONTH_TO_DATE_GET_SUCCESS:
     case YEAR_TO_DATE_GET_SUCCESS:
+    case ITEM_UPDATE_SUCCESS:
+    case ITEM_DELETE_SUCCESS:
       return { payload: action.payload }
     case RESET_ITEMS:
       return INITIAL_ALL_STATE

@@ -45,7 +45,8 @@ const History: FC<TScreenProps & TPropsFromRedux> = (props) => {
                   {props.item.month}
                 </Text>
               </Layout>
-            )}>
+            )}
+          >
             <PieChart
               data={props.item.chartData}
               width={Dimensions.get('window').width}

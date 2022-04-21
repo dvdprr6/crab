@@ -48,6 +48,7 @@ export type TWalletItemDto = {
 export type TMonthForm = TItemDto
 export type TWalletForm = TWalletDto
 export type TWalletItemForm = TWalletItemDto
+export type TItemForm = TItemDto
 
 export type TFilterForm = {
   filter: typeof MTD | typeof YTD

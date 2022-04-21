@@ -5,11 +5,12 @@ import {
   getMonthToDateItemsById,
   getYearToDateItemsById,
   upsertItemAndGetMonthToDateItems,
+  upsertItemAndGetYearToDateItems,
   deleteItemAndGetMonthToDateItems,
   resetItems,
   itemDetailsReducer,
   TItemsAction,
-  TItemsAllState
+  TItemsAllState, deleteItemAndGetYearToDateItems,
 } from './items'
 import {
   getWalletsDetails,
@@ -22,6 +23,7 @@ import {
   walletDetailsReducer
 } from './wallet'
 import { TItemDto, TWalletDto, TWalletItemDto } from '@crab-models'
+import wallet from "../components/wallet/Wallet";
 
 const THUNK_TIMEOUT = 1500
 
@@ -66,11 +68,11 @@ export type TPropsFromRedux = ConnectedProps<typeof connector>
 //   }
 // }
 
-export function getMonthToDateItemsByIdThunk(id: string): TThunkResult<Promise<TActions>>{
+export function getMonthToDateItemsByIdThunk(walletId: string): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
-        const itemsAction = getMonthToDateItemsById(id)
+        const itemsAction = getMonthToDateItemsById(walletId)
           .then(success => dispatch(success))
 
         resolve(itemsAction)
@@ -79,11 +81,11 @@ export function getMonthToDateItemsByIdThunk(id: string): TThunkResult<Promise<T
   }
 }
 
-export function getYearToDateItemsByIdThunk(id: string): TThunkResult<Promise<TActions>>{
+export function getYearToDateItemsByIdThunk(walletId: string): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
-        const itemsAction = getYearToDateItemsById(id)
+        const itemsAction = getYearToDateItemsById(walletId)
           .then(success => dispatch(success))
 
         resolve(itemsAction)
@@ -103,11 +105,37 @@ export function resetItemsThunk(): TThunkResult<Promise<TActions>>{
   }
 }
 
-export function upsertMonthToDateByIdThunk(itemDto: TItemDto): TThunkResult<Promise<TActions>>{
+export function upsertMonthToDateByIdThunk(itemDto: TItemDto, walletId: string): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
-        const monthToDateAction = upsertItemAndGetMonthToDateItems(itemDto)
+        const monthToDateAction = upsertItemAndGetMonthToDateItems(itemDto, walletId)
+          .then(success => dispatch(success))
+
+        resolve(monthToDateAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function upsertYearToDateByIdThunk(itemDto: TItemDto, walletId: string): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const yearToDateAction = upsertItemAndGetYearToDateItems(itemDto, walletId)
+          .then(success => dispatch(success))
+
+        resolve(yearToDateAction)
+      }, THUNK_TIMEOUT)
+    })
+  }
+}
+
+export function deleteItemMonthToDateThunk(itemDto: TItemDto, id: string): TThunkResult<Promise<TActions>>{
+  return async (dispatch) => {
+    return new Promise<TActions>(resolve => {
+      setTimeout(() => {
+        const monthToDateAction = deleteItemAndGetMonthToDateItems(itemDto, id)
           .then(success => dispatch(success))
           //.then(() => getYearToDateItems().then(success => dispatch(success)))
 
@@ -117,15 +145,14 @@ export function upsertMonthToDateByIdThunk(itemDto: TItemDto): TThunkResult<Prom
   }
 }
 
-export function deleteMonthToDateThunk(itemDto: TItemDto): TThunkResult<Promise<TActions>>{
+export function deleteItemYearToDateThunk(itemDto: TItemDto, id: string): TThunkResult<Promise<TActions>>{
   return async (dispatch) => {
     return new Promise<TActions>(resolve => {
       setTimeout(() => {
-        const monthToDateAction = deleteItemAndGetMonthToDateItems(itemDto)
+        const yearToDateAction = deleteItemAndGetYearToDateItems(itemDto, id)
           .then(success => dispatch(success))
-          //.then(() => getYearToDateItems().then(success => dispatch(success)))
 
-        resolve(monthToDateAction)
+        resolve(yearToDateAction)
       }, THUNK_TIMEOUT)
     })
   }
